@@ -14,14 +14,14 @@ public class PresidenteController {
 @Autowired PresidenteService presidenteService;
 	
 	@GetMapping("/presidente/{id}")
-	  public String getGiocatore(@PathVariable("id") Long id, Model model) {
+	  public String getPresidente(@PathVariable("id") Long id, Model model) {
 	    model.addAttribute("presidente", this.presidenteService.findById(id));
 	    return "presidente.html";
 	  }
 	
 	@GetMapping("/presidente")
-	  public String showGiocatori(Model model) {
-	    model.addAttribute("presidentes", this.presidenteService.findAll());
-	    return "presidentes.html";
+	  public String showPresidenti(Model model) {
+	    model.addAttribute("presidenti", this.presidenteService.findAll());
+	    return "presidenti.html";
 	  }
 }

@@ -7,6 +7,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 
 @Entity
 public class Squadra {
@@ -18,7 +20,12 @@ public class Squadra {
 	private String nome;
 	private String fondazione;
 	private String indirizzoSede;
-	private List<Giocatore> giocatori;
+	
+	@OneToMany(mappedBy = "squadra")
+	private List<TesseramentoGiocatore> giocatori;
+	
+	@OneToOne
+	private Presidente presidente;
 	
 	//getter e setter
 	public Long getId() {
@@ -45,13 +52,19 @@ public class Squadra {
 	public void setIndirizzoSede(String indirizzoSede) {
 		this.indirizzoSede = indirizzoSede;
 	}
-	public List<Giocatore> getGiocatori() {
+	public List<TesseramentoGiocatore> getGiocatori() {
 		return giocatori;
 	}
-	public void setGiocatori(List<Giocatore> giocatori) {
+	public void setTesseramentoGiocatore(List<TesseramentoGiocatore> giocatori) {
 		this.giocatori = giocatori;
 	}
 	
+	public Presidente getPresidente() {
+		return presidente;
+	}
+	public void setPresidente(Presidente presidente) {
+		this.presidente = presidente;
+	}
 	//equals e hashcode
 	@Override
 	public int hashCode() {

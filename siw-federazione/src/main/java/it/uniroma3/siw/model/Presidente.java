@@ -6,6 +6,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 
 @Entity
 public class Presidente {
@@ -19,6 +21,10 @@ public class Presidente {
 	private String CF;
 	private String dataNascita;
 	private String luogoNascita;
+	
+	@JoinColumn(name = "squadra_id")
+	@OneToOne
+	private Squadra squadra;
 	
 	//setter e getter
 	public Long getId() {
@@ -56,9 +62,14 @@ public class Presidente {
 	}
 	public void setLuogoNascita(String luogoNascita) {
 		this.luogoNascita = luogoNascita;
-		
-		//equals e hashcode
 	}
+	public Squadra getSquadra() {
+		return squadra;
+	}
+	public void setSquadra(Squadra squadra) {
+		this.squadra = squadra;
+	}
+	//equals e hashcode
 	@Override
 	public int hashCode() {
 		return Objects.hash(CF);

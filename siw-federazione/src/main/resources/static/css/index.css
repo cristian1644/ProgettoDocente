@@ -1,0 +1,61 @@
+body {
+  background-image: url('/images/index/football-background.png');
+  background-repeat: repeat; /* Ripete il pattern */
+  background-size: cover; /* Copre l'intera area */
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+
+#titolo{
+	font-size: 50px;
+	font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+	margin-right: 10px;
+	margin-left: 10px;
+}
+
+div {
+  text-align: center; /* Centra il testo all'interno del div */
+  margin: 20px auto; /* Spazio attorno al div */
+}
+
+.header-container {
+  display: flex; /* Visualizza i container uno accanto all'altro */
+  justify-content: flex-start;
+  align-items: center;
+  background-color: rgb(0, 128, 255);
+  height: 180px;
+}
+
+.header-item {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: rgb(0, 0, 0);
+    font-weight: bold;
+	font-size: 20px;
+	margin: 25px;
+	position: relative;
+}
+
+.image {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.footer-container{
+	display: flex;
+	height: 140px;
+	background-color: rgb(0, 128, 255);
+}
+#user{
+	color: rgb(0, 0, 0)
+}
+
+.user-link{
+	display: flex;
+	flex-direction: column;
+	margin-top: 15px;
+}

@@ -14,14 +14,14 @@ public class SquadraController {
 	@Autowired SquadraService squadraService;
 	
 	@GetMapping("/squadra/{id}")
-	  public String getGiocatore(@PathVariable("id") Long id, Model model) {
+	  public String getSquadra(@PathVariable("id") Long id, Model model) {
 	    model.addAttribute("squadra", this.squadraService.findById(id));
 	    return "squadra.html";
 	  }
 	
 	@GetMapping("/squadra")
 	  public String showGiocatori(Model model) {
-	    model.addAttribute("squadras", this.squadraService.findAll());
-	    return "squadras.html";
+	    model.addAttribute("squadre", this.squadraService.findAll());
+	    return "squadre.html";
 	  }
 }

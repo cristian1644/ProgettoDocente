@@ -1,0 +1,2 @@
+insert into utente(id, nome, cognome) values(nextval('utente_seq'), 'mario', 'rossi');
+insert into credentials(id, username, password, role, user_id, email) values(nextval('credentials_seq'), 'mario', 'mario', 'ROLE_ADMIN', 1, 'mario.rossi@gmail.com');
