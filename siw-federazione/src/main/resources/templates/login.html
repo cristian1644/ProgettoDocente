@@ -39,51 +39,66 @@
 	</header>
 	<section>
 		<div class="container">
-		        <!-- Login Form -->
-		        <div id="login-form">
-		            <h2>Login</h2>
-		            <form th:action="@{/login}" method="POST">
-		                <div class="form-group">
-		                    <label for="login-username">Username</label>
-		                    <input type="text" id="login-email" name="username" required>
-		                </div>
-		                <div class="form-group">
-		                    <label for="login-password">Password</label>
-		                    <input type="password" id="login-password" name="password" required>
-		                </div>
-		                <div class="form-group">
-		                    <button type="submit">Login</button>
-		                </div>
-						<div th:if="${param.error}">
-					        <span th:text="#{invalid.credentials}" class="error-message"></span>
-					    </div>
-		            </form>
-		            <a href="#" class="toggle-link" onclick="toggleForms()">Don't have an account? Register here.</a>
-		        </div>
+            <!-- Login Form -->
+            <div class="form-container">
+                <h2>Login</h2>
+                <form th:action="@{/login}" method="POST">
+                    <div class="form-group">
+                        <label for="login-username">Username</label>
+                        <input type="text" id="login-username" name="username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">Password</label>
+                        <input type="password" id="login-password" name="password" required>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit">Login</button>
+                    </div>
+                    <div th:if="${param.error}">
+                        <span th:text="#{invalid.credentials}" class="error-message"></span>
+                    </div>
+                </form>
+            </div>
 
-		        <!-- Registration Form -->
-		        <div id="registration-form" style="display: none;">
-		            <h2>Register</h2>
-		            <form action="/register" method="POST">
-		                <div class="form-group">
-		                    <label for="register-name">Name</label>
-		                    <input type="text" id="register-name" name="name" required>
-		                </div>
-		                <div class="form-group">
-		                    <label for="register-email">Email</label>
-		                    <input type="email" id="register-email" name="email" required>
-		                </div>
-		                <div class="form-group">
-		                    <label for="register-password">Password</label>
-		                    <input type="password" id="register-password" name="password" required>
-		                </div>
-		                <div class="form-group">
-		                    <button type="submit">Register</button>
-		                </div>
-		            </form>
-		            <a href="#" class="toggle-link" onclick="toggleForms()">Already have an account? Login here.</a>
-		        </div>
-		    </div>
+            <!-- Registration Form -->
+            <div class="form-container">
+                <h2>Registrati</h2>
+                <form th:action="@{/registrazione}" th:object="${credentials}" method="POST">
+                    <div class="form-group">
+                        <label for="register-name">Nome</label>
+                        <input type="text" id="register-name" name="nome" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-surname">Cognome</label>
+                        <input type="text" id="register-surname" name="cognome" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-email">Email</label>
+                        <input type="text" id="register-email" name="email" required>
+                    </div>
+					<div class="form-group">
+                        <label for="register-username">Username</label>
+                        <input type="text" id="register-name" name="username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-password">Password</label>
+                        <input type="password" id="register-password" name="password" required>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit">Register</button>
+                    </div>
+					<div th:if="${successMessage}" class="registration-complete">
+						<p th:text="${successMessage}" class="successMessage"></p>
+					</div>
+					<div th:if="${#fields.hasErrors('email')}" class="error-container">
+						<span th:errors="*{email}" class="error-message"></span>
+					</div>
+					<div th:if="${#fields.hasErrors('username')}" class="error-container">
+						<span th:errors="*{username}" class="error-message"></span>
+					</div>
+                </form>
+            </div>
+        </div>
 	</section>
 	<footer>
 		<div class="footer-container">

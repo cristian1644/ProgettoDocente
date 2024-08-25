@@ -22,4 +22,6 @@ public class SiwFederazioneApplication {
     public void updatePasswordsOnStartup() {
         passwordUpdaterService.updatePasswords();
     }
+	
+	
 }

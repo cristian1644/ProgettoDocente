@@ -21,7 +21,7 @@ div {
 
 .header-container {
   display: flex; /* Visualizza i container uno accanto all'altro */
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
   background-color: rgb(0, 128, 255);
   height: 180px;

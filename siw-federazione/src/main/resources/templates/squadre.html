@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>
+		Squadre
+	</title>
+	<link rel="stylesheet" href="/css/index.css" />
+	<link rel="stylesheet" href="/css/squadre.css" />
+</head>
+
+<body>
+	<nav></nav>
+	<!--HEADER-->
+	<header>
+		<div class="header-container">
+			
+			<span id="titolo">SIW FEDERAZIONE</span>
+					
+			<span>
+				<a href="/" class="header-item">
+								<img src="images/index/ball.png" alt="ball" class="image">
+								<span>HOMEPAGE</span>
+				</a>
+			</span>	
+			<span>
+				<a href="/squadre" class="header-item">
+								<img src="images/index/team.png" alt="team" class="image">
+								<span>SQUADRE</span>
+				</a>
+			</span>
+			<span>
+				<a href="/login" class="header-item">
+								<img src="images/index/account.png" alt="account" class="image">
+								<span class="user-link">
+							        <span>ACCOUNT</span>
+							        <span th:if="${authentication != null}">
+							        	<p id="user"><span th:text="${authentication.principal.username}">No Username</span></p>
+							        </span>
+								</span>
+				</a>
+			</span>
+		</div>
+	</header>
+	<section>
+		<div th:if="${squadre.isEmpty()}">Non ci sono squadre inserite</div>
+		<table>
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Fondazione</th>
+                    <th>Sede</th>
+					<th>Presidente</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="squadra : ${squadre}">
+                    <td th:text="${squadra.nome}">Nome Squadra</td>
+                    <td th:text="${squadra.fondazione}">Anno di fondazione</td>
+                    <td th:text="${squadra.indirizzoSede}">Indirizzo sede</td>
+					<td th:text="${squadra.presidente.nome + ' ' + squadra.presidente.cognome}">Presidente</td>
+                </tr>
+            </tbody>
+        </table>
+		<form th:action="@{/admin/gestioneSquadre}" method="POST">
+			<div><button type="submit">Gestisci squadre</button></div>
+		</form>
+		
+	</section>
+	<footer>
+		<div class="footer-container">
+			<div>p</div>
+		</div>
+	</footer>
+</body>
+
+</html>

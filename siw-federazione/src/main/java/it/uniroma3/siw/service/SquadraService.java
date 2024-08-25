@@ -19,5 +19,9 @@ public class SquadraService {
 	public Iterable<Squadra> findAll() {
 		return squadraRepository.findAll();
 	}
+	
+	public Squadra findByNome(String nome) {
+		return this.squadraRepository.findByNome(nome);
+	}
 
 }

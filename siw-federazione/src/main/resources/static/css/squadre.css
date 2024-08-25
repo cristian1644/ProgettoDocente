@@ -1,0 +1,58 @@
+table {
+    width: 80%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 20px;
+    text-align: center;
+    background-color: #f9f9f9;
+	margin: 20px auto;
+}
+
+th{
+	text-align: center;
+}
+
+thead tr {
+    background-color: #009879;
+    color: #ffffff;
+    text-align: left;
+}
+
+th, td {
+    padding: 12px 15px;
+    border: 1px solid rgb(192, 192, 192);
+}
+
+tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+tbody tr:last-of-type {
+    border-bottom: 2px solid #009879;
+}
+
+tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+thead th {
+    border-bottom: 2px solid #009879;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+button{
+	background-color: rgb(0, 255, 255);
+    color: rgb(0, 0, 0); /* Testo bianco */
+    padding: 12px 24px; /* Spaziatura */
+    font-size: 18px; /* Dimensione del testo */
+	font-weight: bold;
+    border: none; /* Nessun bordo */
+    border-radius: 8px; /* Bordi arrotondati */
+    cursor: pointer; /* Cursore a mano */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Ombreggiatura */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Transizioni morbide */
+}
