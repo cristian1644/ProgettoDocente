@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>
+		Gestione Tesseramenti
+	</title>
+	<link rel="stylesheet" href="/css/index.css" />
+	<link rel="stylesheet" href="/css/gestioneGiocatori.css" />
+</head>
+
+<body>
+	<nav></nav>
+	<!--HEADER-->
+	<header>
+		<div class="header-container">
+			
+			<span id="titolo">SIW FEDERAZIONE</span>
+					
+			<span>
+				<a href="/" class="header-item">
+								<img src="/images/index/ball.png" alt="ball" class="image">
+								<span>HOMEPAGE</span>
+				</a>
+			</span>	
+			<span>
+				<a href="/squadre" class="header-item">
+								<img src="/images/index/team.png" alt="team" class="image">
+								<span>SQUADRE</span>
+				</a>
+			</span>
+			<span>
+				<a href="/login" class="header-item">
+					<img src="/images/index/account.png" alt="account" class="image">
+					<span class="user-link">
+				        <span>ACCOUNT</span>
+				        <span th:if="${authentication != null}">
+				        	<p id="user"><span th:text="${authentication.principal.username}">No Username</span></p>
+				        </span>
+					</span>
+				</a>
+			</span>
+		</div>
+	</header>
+	<section>
+		<div class="container">
+			<form th:action="@{/president/gestioneGiocatori/salva-tesseramento}" th:object="${tesseramentoGiocatoreDTO}" method="POST">
+				<h2>Nuovo Tesseramento</h2>
+			        <div>
+			            <label for="giocatoreId">Giocatore:</label>
+			            <select th:field="*{giocatoreId}">
+			                <option th:each="giocatore : ${giocatori}" th:value="${giocatore.id}" th:text="${giocatore.cognome}">Giocatore</option>
+			            </select>
+			        </div>
+			        <div>
+			            <label for="squadraId">Squadra:</label>
+			            <select th:field="*{squadraId}">
+			                <option th:each="squadra : ${squadre}" th:value="${squadra.id}" th:text="${squadra.nome}">Squadra</option>
+			            </select>
+			        </div>
+					<div>
+					    <label for="inizioTesseramento">Inizio Tesseramento</label>
+					    <input type="date" id="inizioTesseramento" th:field="*{inizioTesseramento}" />
+					</div>
+
+					<div>
+					    <label for="fineTesseramento">Fine Tesseramento</label>
+					    <input type="date" id="fineTesseramento" th:field="*{fineTesseramento}" />
+					</div>
+					<div th:if="${#fields.hasGlobalErrors()}" class="error">
+				        <p th:each="err : ${#fields.globalErrors()}" th:text="${err}" class="error-message"></p>
+				    </div>
+			        <div>
+			            <button type="submit">Salva</button>
+			        </div>
+					
+			    </form>
+				
+				<form th:action="@{/president/gestioneGiocatori/rimuovi-tesseramento}" method="POST">
+				    <input type="hidden" name="_method" value="delete" />
+				    <div>
+				        <h2>Seleziona il tesseramento da rimuovere</h2>
+				        <select name="tesseramentoId" id="tesseramentoId">
+				            <option th:each="tesseramento : ${tesseramenti}" 
+				                    th:value="${tesseramento.id}" 
+				                    th:text="${tesseramento.giocatore.nome} + ' ' + ${tesseramento.giocatore.cognome} + ' - ' + ${tesseramento.squadra.nome}">Tesseramento</option>
+				        </select>
+				    </div>
+				    <div>
+				        <button type="submit">Rimuovi Tesseramento</button>
+				    </div>
+					<div th:if="${successMessage}" class="registration-complete">
+						<p th:text="${successMessage}" class="successMessage"></p>
+					</div>
+				</form>
+		</div>
+	</section>
+	<footer>
+		<div class="footer-container">
+			<div>p</div>
+		</div>
+	</footer>
+</body>
+
+</html>

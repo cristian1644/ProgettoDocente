@@ -1,5 +1,6 @@
 package it.uniroma3.siw.model;
 
+import java.time.LocalDate;
 import java.util.Objects;
 
 import jakarta.persistence.Entity;
@@ -13,7 +14,7 @@ import jakarta.persistence.ManyToOne;
 public class TesseramentoGiocatore {
 
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 	
 	@JoinColumn(name = "giocatore_id")
@@ -23,8 +24,8 @@ public class TesseramentoGiocatore {
 	@JoinColumn(name = "squadra_id")
 	@ManyToOne
 	private Squadra squadra;
-	private String inizioTesseramento;
-	private String fineTesseramento;
+	private LocalDate inizioTesseramento;
+	private LocalDate fineTesseramento;
 	
 	//setter e getter
 	public Long getId() {
@@ -45,16 +46,16 @@ public class TesseramentoGiocatore {
 	public void setSquadra(Squadra squadra) {
 		this.squadra = squadra;
 	}
-	public String getInizioTesseramento() {
+	public LocalDate getInizioTesseramento() {
 		return inizioTesseramento;
 	}
-	public void setInizioTesseramento(String inizioTesseramento) {
+	public void setInizioTesseramento(LocalDate inizioTesseramento) {
 		this.inizioTesseramento = inizioTesseramento;
 	}
-	public String getFineTesseramento() {
+	public LocalDate getFineTesseramento() {
 		return fineTesseramento;
 	}
-	public void setFineTesseramento(String fineTesseramento) {
+	public void setFineTesseramento(LocalDate fineTesseramento) {
 		this.fineTesseramento = fineTesseramento;
 		
 		//equals e hashcode

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>
+		Giocatori Squadra
+	</title>
+	<link rel="stylesheet" href="/css/index.css" />
+	<link rel="stylesheet" href="/css/giocatoriSquadra.css" />
+</head>
+
+<body>
+	<nav></nav>
+	<!--HEADER-->
+	<header>
+		<div class="header-container">
+			
+			<span id="titolo">SIW FEDERAZIONE</span>
+					
+			<span>
+				<a href="/" class="header-item">
+								<img src="/images/index/ball.png" alt="ball" class="image">
+								<span>HOMEPAGE</span>
+				</a>
+			</span>	
+			<span>
+				<a href="/squadre" class="header-item">
+								<img src="/images/index/team.png" alt="team" class="image">
+								<span>SQUADRE</span>
+				</a>
+			</span>
+			<span>
+				<a href="/login" class="header-item">
+								<img src="/images/index/account.png" alt="account" class="image">
+								<span class="user-link">
+							        <span>ACCOUNT</span>
+							        <span th:if="${authentication != null}">
+							        	<p id="user"><span th:text="${authentication.principal.username}">No Username</span></p>
+							        </span>
+								</span>
+				</a>
+			</span>
+		</div>
+	</header>
+	<section>
+		<h1>Giocatori di [[${squadra.nome}]]</h1>
+		    <table>
+		        <thead>
+		            <tr>
+		                <th>Nome</th>
+		                <th>Cognome</th>
+		                <th>Ruolo</th>
+						<th>Inizio Tesseramento</th>
+						<th>Fine Tesseramento</th>
+		            </tr>
+		        </thead>
+		        <tbody>
+		            <tr th:each="giocatore : ${giocatori}">
+		                <td th:text="${giocatore.nome}">Nome</td>
+		                <td th:text="${giocatore.cognome}">Cognome</td>
+		                <td th:text="${giocatore.ruolo}">Ruolo</td>
+						<td th:text="${giocatore.tesseramento.inizioTesseramento}">Ruolo</td>
+						<td th:text="${giocatore.tesseramento.fineTesseramento}">Ruolo</td>
+		            </tr>
+		        </tbody>
+		    </table>
+	</section>
+	<footer>
+		<div class="footer-container">
+			<div>p</div>
+		</div>
+	</footer>
+</body>
+
+</html>

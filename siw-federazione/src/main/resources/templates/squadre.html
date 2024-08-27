@@ -51,6 +51,7 @@
                     <th>Fondazione</th>
                     <th>Sede</th>
 					<th>Presidente</th>
+					<th>Giocatori</th>
                 </tr>
             </thead>
             <tbody>
@@ -59,11 +60,18 @@
                     <td th:text="${squadra.fondazione}">Anno di fondazione</td>
                     <td th:text="${squadra.indirizzoSede}">Indirizzo sede</td>
 					<td th:text="${squadra.presidente.nome + ' ' + squadra.presidente.cognome}">Presidente</td>
+					<td>
+		                <a th:href="@{/squadra/{id}/giocatori(id=${squadra.id})}">Visualizza Giocatori</a>
+		            </td>
                 </tr>
             </tbody>
         </table>
 		<form th:action="@{/admin/gestioneSquadre}" method="POST">
 			<div><button type="submit">Gestisci squadre</button></div>
+		</form>
+		
+		<form th:action="@{/president/gestioneGiocatori}" method="POST">
+			<div><button type="submit">Gestisci giocatori</button></div>
 		</form>
 		
 	</section>

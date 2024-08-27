@@ -60,10 +60,12 @@
 		           </div>
 		           <div>
 		               <label for="presidente">Presidente:</label>
-		               <select id="presidente" th:field="*{presidente}" required>
-		                   <option value="" disabled selected>Seleziona un Presidente</option>
-		                   <option th:each="presidente : ${presidenti}" th:value="${presidente.id}" th:text="${presidente.nome + ' ' + presidente.cognome}"></option>
-		               </select>
+					   <select id="presidente" th:field="*{presidente}" required>  
+					       <option th:each="presidente : ${presidenti}" 
+					               th:value="${presidente.id}" 
+					               th:text="${presidente.nome + ' ' + presidente.cognome}">
+					       </option>
+					   </select>
 		           </div>
 		           <div>
 		               <button type="submit">Aggiungi Squadra</button>

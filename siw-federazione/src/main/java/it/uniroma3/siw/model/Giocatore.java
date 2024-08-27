@@ -1,19 +1,18 @@
 package it.uniroma3.siw.model;
 
-import java.util.List;
 import java.util.Objects;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 
 @Entity
 public class Giocatore {
 	
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 	private String nome;
 	private String cognome;
@@ -21,8 +20,8 @@ public class Giocatore {
 	private String luogoNascita;
 	private String ruolo;
 	
-	@OneToMany(mappedBy = "giocatore")
-	private List<TesseramentoGiocatore> tesseramenti;
+	@OneToOne(mappedBy = "giocatore")
+	private TesseramentoGiocatore tesseramento;
 	
 	//setter e getter
 	public Long getId() {
@@ -61,11 +60,11 @@ public class Giocatore {
 	public void setRuolo(String ruolo) {
 		this.ruolo = ruolo;
 	}
-	public List<TesseramentoGiocatore> getTesseramenti() {
-		return tesseramenti;
+	public TesseramentoGiocatore getTesseramento() {
+		return tesseramento;
 	}
-	public void setTesseramenti(List<TesseramentoGiocatore> tesseramenti) {
-		this.tesseramenti = tesseramenti;
+	public void setTesseramenti(TesseramentoGiocatore tesseramento) {
+		this.tesseramento = tesseramento;
 	}
 	//equals e hashcode
 	@Override

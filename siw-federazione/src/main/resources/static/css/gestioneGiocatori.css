@@ -1,0 +1,67 @@
+.container {
+	display: flex;
+	justify-content: center;
+    margin: 0 auto;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h2{
+	font-size: 40px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+	font-size: 20px;
+	background-color: rgb(255, 255, 255);
+	margin: 40px;
+	padding-left: 40px;
+	padding-right: 40px;
+	border: 7px solid black;
+	border-radius: 8px;
+}
+div {
+    margin-bottom: 15px;
+}
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+input[type="text"],
+select {
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+	font-size: 20px;
+}
+input[type="text"]:focus,
+select:focus {
+    border-color: #007bff;
+    outline: none;
+}
+#inizioTesseramento, #fineTesseramento, #tesseramentoId{
+	font-size: 20px;
+}
+button {
+    background-color: #007bff;
+    color: rgb(0, 0, 0);
+    border: none;
+    padding: 10px 15px;
+    font-size: 22px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+	font-weight: bold;
+}
+button:hover {
+    background-color: #0056b3;
+}
+.error-message {
+    color: red;
+    font-size: 0.875em;
+    margin-top: -10px;
+    margin-bottom: 10px;
+}
