@@ -14,5 +14,6 @@ public interface UserRepository extends CrudRepository<Utente, Long>{
 	public boolean existsByNome(String nome);
 	public Optional<Utente> findById(Long id);
 	List<Utente> findByCredentialsIn(List<Credentials> credentials);
+	public Utente findByCredentials(Credentials credentials);
 	
 }

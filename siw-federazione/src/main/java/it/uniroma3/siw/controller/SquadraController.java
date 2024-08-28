@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import it.uniroma3.siw.model.Credentials;
 import it.uniroma3.siw.model.Giocatore;
 import it.uniroma3.siw.model.Squadra;
@@ -72,6 +74,7 @@ public class SquadraController {
         List<Utente> presidenti = utenteRepository.findByCredentialsIn(presidentCredentials);
         model.addAttribute("presidenti", presidenti);
         model.addAttribute("squadra", new Squadra());
+        model.addAttribute("squadre",this.squadraService.findAll());
         
 		return "admin-gestioneSquadre";
 	}
@@ -109,6 +112,24 @@ public class SquadraController {
         model.addAttribute("squadra", squadra);
         model.addAttribute("giocatori", giocatori);
         return "giocatoriSquadra";
+    }
+	
+	@GetMapping("/admin/modificaSquadra")
+    public String mostraFormModifica(@RequestParam("id") Long id, Model model) {
+        Squadra squadraSelezionata = squadraService.findById(id);
+        model.addAttribute("squadraSelezionata", squadraSelezionata);
+        model.addAttribute("squadra", new Squadra());
+        List<Credentials> presidentCredentials = credentialsRepository.findByRole("ROLE_PRESIDENT");
+        List<Utente> presidenti = utenteRepository.findByCredentialsIn(presidentCredentials);
+		model.addAttribute("presidenti", presidenti);
+		model.addAttribute("squadre",this.squadraService.findAll());
+        return "admin-gestioneSquadre";
+    }
+	
+	@PostMapping("/admin/aggiornaSquadra")
+    public String aggiornaSquadra(@ModelAttribute("squadraSelezionata") Squadra squadra) {
+        squadraService.update(squadra);
+        return "redirect:/squadre";
     }
  
 }

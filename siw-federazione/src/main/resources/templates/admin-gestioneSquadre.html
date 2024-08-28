@@ -30,7 +30,7 @@
 				</a>
 			</span>
 			<span>
-				<a href="/login" class="header-item">
+				<a th:href="${authentication != null ? '/user' : '/login'}" class="header-item">
 					<img src="/images/index/account.png" alt="account" class="image">
 					<span class="user-link">
 				        <span>ACCOUNT</span>
@@ -81,8 +81,60 @@
 					</div>
 		       </form>
 			  
-				   
-			   
+			   <form th:action="@{/admin/modificaSquadra}" method="GET">
+	               <h2>Modifica Squadra Esistente</h2>
+	               <div>
+	                   <label for="squadraSelezionata">Seleziona Squadra:</label>
+					   <select id="squadraSelezionata" name="id" required>
+				           <option th:each="squadra : ${squadre}" 
+				                   th:value="${squadra.id}" 
+				                   th:text="${squadra.nome}"></option>
+				       </select>
+	               </div>
+	               <div>
+	                   <button type="submit">Seleziona Squadra</button>
+	               </div>
+	           </form>
+
+	           <!-- Form per aggiornare i dettagli della squadra selezionata -->
+	           <form th:action="@{/admin/aggiornaSquadra}" th:object="${squadraSelezionata}" method="POST" th:if="${squadraSelezionata != null}">
+	               <h3>Modifica Dettagli Squadra</h3>
+				   <input type="hidden" th:field="*{id}" />
+	               <div>
+	                   <label for="nome">Nome:</label>
+	                   <input type="text" id="nome" th:field="*{nome}" required />
+	               </div>
+	               <div>
+	                   <label for="fondazione">Fondazione:</label>
+	                   <input type="text" id="fondazione" th:field="*{fondazione}" required />
+	               </div>
+	               <div>
+	                   <label for="indirizzoSede">Indirizzo Sede:</label>
+	                   <input type="text" id="indirizzoSede" th:field="*{indirizzoSede}" required />
+	               </div>
+	               <div>
+	                   <label for="presidente">Presidente:</label>
+	                   <select id="presidente" th:field="*{presidente}" required>
+	                       <option th:each="presidente : ${presidenti}" 
+	                               th:value="${presidente.id}" 
+	                               th:text="${presidente.nome + ' ' + presidente.cognome}">
+	                       </option>
+	                   </select>
+	               </div>
+	               <div>
+	                   <button type="submit">Aggiorna Squadra</button>
+	               </div>
+	               <!-- Sezione per eventuali messaggi di errore -->
+	               <div th:if="${#fields.hasErrors('nome')}" class="error-container">
+	                   <span th:errors="*{nome}" class="error-message"></span>
+	               </div>
+	               <div th:if="${#fields.hasErrors('fondazione')}" class="error-container">
+	                   <span th:errors="*{fondazione}" class="error-message"></span>
+	               </div>
+	               <div th:if="${#fields.hasErrors('indirizzoSede')}" class="error-container">
+	                   <span th:errors="*{indirizzoSede}" class="error-message"></span>
+	               </div>
+	           </form>
 		   </div>
 	</section>
 	<footer>

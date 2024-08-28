@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import it.uniroma3.siw.model.Credentials;
 import it.uniroma3.siw.model.Utente;
 import it.uniroma3.siw.repository.UserRepository;
 
@@ -33,5 +34,9 @@ public class UserService {
 	public Utente findById(Long id) {
         return userRepository.findById(id).orElse(null);
     }
+	
+	public Utente findByCredentials(Credentials credentials) {
+		return this.userRepository.findByCredentials(credentials);
+	}
 	
 }

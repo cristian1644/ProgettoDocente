@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>
+		SiwFederazione-Homepage
+	</title>
+	<link rel="stylesheet" href="/css/index.css" />
+	<link rel="stylesheet" href="/css/user.css" />
+</head>
+
+<body>
+	<nav></nav>
+	<!--HEADER-->
+	<header>
+		<div class="header-container">
+			
+			<span id="titolo">SIW FEDERAZIONE</span>
+					
+			<span>
+				<a href="/" class="header-item">
+								<img src="/images/index/ball.png" alt="ball" class="image">
+								<span>HOMEPAGE</span>
+				</a>
+			</span>	
+			<span>
+				<a href="/squadre" class="header-item">
+								<img src="/images/index/team.png" alt="team" class="image">
+								<span>SQUADRE</span>
+				</a>
+			</span>
+			<span>
+				<a th:href="${authentication != null ? '/user' : '/login'}" class="header-item">
+					<img src="images/index/account.png" alt="account" class="image">
+					<span class="user-link">
+				        <span>ACCOUNT</span>
+				        <span th:if="${authentication != null}">
+				        	<p id="user"><span th:text="${authentication.principal.username}">No Username</span></p>
+				        </span>
+					</span>
+				</a>
+			</span>
+		</div>
+	</header>
+	<section>
+		<div class="main-container">
+				<div class="profile-container">
+					<span id="title">Il tuo profilo</span>
+					<div class="details-user-container" th:if="${authentication != null}">
+						<div class="details-item">Username: <span th:text="${authentication.principal.username}">No Username</span></div>
+						 <div th:if="${credentials != null}">
+						    <p class="details-item">Email: <span th:text="${credentials.email}">No Email</span></p>
+						    <p class="details-item">Nome: <span th:text="${user.nome}">No Nome</span></p>
+						    <p class="details-item">Cognome: <span th:text="${user.cognome}">No Cognome</span></p>
+							<p class="details-item">Codice Fiscale: <span th:text="${credentials.user.CF}">No CF</span></p>
+							<p class="details-item">Data di nascita: <span th:text="${credentials.user.dataNascita}">No data nascita</span></p>
+							<p class="details-item">Luogo di nascita: <span th:text="${credentials.user.luogoNascita}">No luogoNascita</span></p>
+							<p class="details-item">Livello di autorizzazione: <span th:text="${credentials.role}">No role</span></p>
+						 </div>
+					</div>
+					
+					
+					<span>
+			            <!-- Link di logout -->
+			            <a href="/logout" class="logout-link">
+			                <span>Logout</span>
+			            </a>
+			        </span>
+				</div>
+			</div>
+	</section>
+	<footer>
+		<div class="footer-container">
+			<div>p</div>
+		</div>
+	</footer>
+</body>
+
+</html>

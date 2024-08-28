@@ -65,3 +65,8 @@ button:hover {
     margin-top: -10px;
     margin-bottom: 10px;
 }
+.successMessage{
+	color: blue;
+	font-weight: bold;
+	margin-top: 15px;
+}

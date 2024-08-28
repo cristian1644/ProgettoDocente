@@ -30,7 +30,7 @@
 				</a>
 			</span>
 			<span>
-				<a href="/login" class="header-item">
+				<a th:href="${authentication != null ? '/user' : '/login'}" class="header-item">
 								<img src="images/index/account.png" alt="account" class="image">
 								<span class="user-link">
 							        <span>ACCOUNT</span>
