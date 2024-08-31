@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.data.repository.CrudRepository;
 
 import it.uniroma3.siw.model.Credentials;
+import it.uniroma3.siw.model.Squadra;
 import it.uniroma3.siw.model.Utente;
 
 public interface UserRepository extends CrudRepository<Utente, Long>{

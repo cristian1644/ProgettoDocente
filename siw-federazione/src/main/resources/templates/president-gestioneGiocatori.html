@@ -47,14 +47,16 @@
 			<form th:action="@{/president/gestioneGiocatori/salva-tesseramento}" th:object="${tesseramentoGiocatoreDTO}" method="POST">
 				<h2>Nuovo Tesseramento</h2>
 			        <div>
-			            <label for="giocatoreId">Giocatore:</label>
-			            <select th:field="*{giocatoreId}">
+			            <label for="giocatoreId" id="giocatoreId">Giocatore:</label>
+						<select name="giocatoreId" required>
+						    <option value="" disabled selected>Seleziona un giocatore</option>
 			                <option th:each="giocatore : ${giocatori}" th:value="${giocatore.id}" th:text="${giocatore.cognome}">Giocatore</option>
 			            </select>
 			        </div>
 			        <div>
-			            <label for="squadraId">Squadra:</label>
-			            <select th:field="*{squadraId}">
+			            <label for="squadraId" id="squadraId">Squadra:</label>
+						<select name="squadraId" required>
+						    <option value="" disabled selected>Seleziona una squadra</option>
 			                <option th:each="squadra : ${squadre}" th:value="${squadra.id}" th:text="${squadra.nome}">Squadra</option>
 			            </select>
 			        </div>
@@ -67,8 +69,14 @@
 					    <label for="fineTesseramento">Fine Tesseramento</label>
 					    <input type="date" id="fineTesseramento" th:field="*{fineTesseramento}" />
 					</div>
-					<div th:if="${#fields.hasGlobalErrors()}" class="error">
-				        <p th:each="err : ${#fields.globalErrors()}" th:text="${err}" class="error-message"></p>
+					<div th:if="${#fields.hasErrors('inizioTesseramento')}" class="error-container">
+						<span th:errors="*{inizioTesseramento}" class="error-message"></span>
+					</div>
+					<div th:if="${#fields.hasGlobalErrors()}">
+					    <div th:each="err : ${#fields.globalErrors()}">
+					        <!-- Mostra solo l'errore globale 'wrong.president' -->
+					        <p th:text="${err}" class="error-message"></p>
+					    </div>
 				    </div>
 			        <div>
 			            <button type="submit">Salva</button>
@@ -76,11 +84,12 @@
 					
 			    </form>
 				
-				<form th:action="@{/president/gestioneGiocatori/rimuovi-tesseramento}" method="POST">
+				<form th:action="@{/president/gestioneGiocatori/rimuovi-tesseramento}" th:object="${removeTesseramentoGiocatoreDTO}" method="POST">
 				    <input type="hidden" name="_method" value="delete" />
 				    <div>
 				        <h2>Seleziona il tesseramento da rimuovere</h2>
-				        <select name="tesseramentoId" id="tesseramentoId">
+				        <select name="tesseramentoId" id="tesseramentoId" required>
+							<option value="" disabled selected>Seleziona un tesseramento</option>
 				            <option th:each="tesseramento : ${tesseramenti}" 
 				                    th:value="${tesseramento.id}" 
 				                    th:text="${tesseramento.giocatore.nome} + ' ' + ${tesseramento.giocatore.cognome} + ' - ' + ${tesseramento.squadra.nome}">Tesseramento</option>
@@ -92,6 +101,12 @@
 					<div th:if="${successMessage}" class="registration-complete">
 						<p th:text="${successMessage}" class="successMessage"></p>
 					</div>
+					<div th:if="${#fields.hasGlobalErrors()}">
+					    <div th:each="err : ${#fields.globalErrors()}">
+					        <!-- Mostra solo l'errore globale 'wrong.president' -->
+					        <p th:text="${err}" class="error-message"></p>
+					    </div>
+				    </div>
 				</form>
 		</div>
 	</section>

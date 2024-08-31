@@ -36,12 +36,23 @@ public class GiocatoreController {
 	@PostMapping("/president/gestioneGiocatori")
 	public String gestisciGiocatoriPagePOST(Model model) {
 		model.addAttribute("tesseramentoGiocatoreDTO", new TesseramentoGiocatoreDTO());
+		model.addAttribute("removeTesseramentoGiocatoreDTO", new TesseramentoGiocatoreDTO());
         model.addAttribute("giocatori", giocatoreRepository.findAll());
         model.addAttribute("squadre", squadraRepository.findAll());
         model.addAttribute("tesseramenti", tesseramentoGiocatoreRepository.findAll());
 		return "president-gestioneGiocatori";
 	}
 	
+	@GetMapping("/president/gestioneGiocatori")
+	public String gestisciGiocatoriPageGET(Model model) {
+		model.addAttribute("tesseramentoGiocatoreDTO", new TesseramentoGiocatoreDTO());
+		model.addAttribute("removeTesseramentoGiocatoreDTO", new TesseramentoGiocatoreDTO());
+        model.addAttribute("giocatori", giocatoreRepository.findAll());
+        model.addAttribute("squadre", squadraRepository.findAll());
+        model.addAttribute("tesseramenti", tesseramentoGiocatoreRepository.findAll());
+		return "president-gestioneGiocatori";
+	}
 
+	
 	
 }

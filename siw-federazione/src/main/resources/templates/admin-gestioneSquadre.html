@@ -86,6 +86,7 @@
 	               <div>
 	                   <label for="squadraSelezionata">Seleziona Squadra:</label>
 					   <select id="squadraSelezionata" name="id" required>
+						<option value="" disabled selected>Seleziona una squadra</option>
 				           <option th:each="squadra : ${squadre}" 
 				                   th:value="${squadra.id}" 
 				                   th:text="${squadra.nome}"></option>

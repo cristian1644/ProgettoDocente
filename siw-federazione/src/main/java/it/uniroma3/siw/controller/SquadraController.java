@@ -65,6 +65,13 @@ public class SquadraController {
 		return "squadre";
 	}
 	
+	@PostMapping("/permessoNegato")
+	public String permessoNegatoPage(Model model) {
+		model.addAttribute("squadre",this.squadraService.findAll());
+		model.addAttribute("squadra", new Squadra());
+		return "permessoNegato";
+	}
+	
 	@PostMapping("/admin/gestioneSquadre")
 	public String gestioneQuadrePage(Model model) {
 		// Trova tutte le credenziali con ruolo ROLE_PRESIDENT

@@ -19,19 +19,19 @@
 					
 			<span>
 				<a href="/" class="header-item">
-								<img src="images/index/ball.png" alt="ball" class="image">
+								<img src="/images/index/ball.png" alt="ball" class="image">
 								<span>HOMEPAGE</span>
 				</a>
 			</span>	
 			<span>
 				<a href="/squadre" class="header-item">
-								<img src="images/index/team.png" alt="team" class="image">
+								<img src="/images/index/team.png" alt="team" class="image">
 								<span>SQUADRE</span>
 				</a>
 			</span>
 			<span>
 				<a th:href="${authentication != null ? '/user' : '/login'}" class="header-item">
-								<img src="images/index/account.png" alt="account" class="image">
+								<img src="/images/index/account.png" alt="account" class="image">
 								<span class="user-link">
 							        <span>ACCOUNT</span>
 							        <span th:if="${authentication != null}">
@@ -71,20 +71,22 @@
 		
 		<div class="link-gestione-container">
 			<div class="click-container">
-				<span><img src="images/squadre/clickHere1.png"></span>
+				<span><img src="/images/squadre/clickHere1.png"></span>
 				<form th:action="@{/admin/gestioneSquadre}" method="POST">
 					<div><button type="submit">Gestisci squadre</button></div>
 				</form>
 			</div>
 			
 			<div class="click-container">
-				<span><img src="images/squadre/clickHere2.png"></span>
+				<span><img src="/images/squadre/clickHere2.png"></span>
 				<form th:action="@{/president/gestioneGiocatori}" method="POST">
 					<div><button type="submit">Gestisci giocatori</button></div>
 				</form>
 			</div>
+			
+			
 		</div>
-		
+		<div id="permesso-negato">Non hai i permessi per accedere a questa funzionalità</div>
 		
 	</section>
 	<footer>

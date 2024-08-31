@@ -62,3 +62,19 @@ div {
 .header-item:hover #user {
     text-decoration: underline;
 }
+#campo-img{
+	width: 90%;
+}
+.second-container{
+	display: flex;
+	align-items: center;
+	background-color: rgb(128, 255, 255, 0.8);
+	width: 95%;
+	height: 650px;
+	border: 10px solid rgb(0, 128, 255);
+	border-radius: 8px;
+}
+
+.second-container img{
+	width: 80%;
+}

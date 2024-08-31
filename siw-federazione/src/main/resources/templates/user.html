@@ -43,9 +43,10 @@
 		</div>
 	</header>
 	<section>
+		<div id="title">Il tuo profilo</div>
 		<div class="main-container">
+			<span><img src="/images/user/campo-graphic.png" id="campo"></span>
 				<div class="profile-container">
-					<span id="title">Il tuo profilo</span>
 					<div class="details-user-container" th:if="${authentication != null}">
 						<div class="details-item">Username: <span th:text="${authentication.principal.username}">No Username</span></div>
 						 <div th:if="${credentials != null}">
@@ -57,16 +58,16 @@
 							<p class="details-item">Luogo di nascita: <span th:text="${credentials.user.luogoNascita}">No luogoNascita</span></p>
 							<p class="details-item">Livello di autorizzazione: <span th:text="${credentials.role}">No role</span></p>
 						 </div>
+						 <span>
+	 			            <!-- Link di logout -->
+	 			            <a href="/logout" class="logout-link">
+	 			                <span>Logout</span>
+	 			            </a>
+	 			        </span>
 					</div>
 					
-					
-					<span>
-			            <!-- Link di logout -->
-			            <a href="/logout" class="logout-link">
-			                <span>Logout</span>
-			            </a>
-			        </span>
 				</div>
+				<span><img src="/images/user/ball-graphic.png" id="palla"></span>
 			</div>
 	</section>
 	<footer>

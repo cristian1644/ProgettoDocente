@@ -1,5 +1,6 @@
 .main-container{
-	display:flex
+	display:flex;
+	align-items: center;
 }
 .profile-container{
 	display: flex;
@@ -9,13 +10,17 @@
 	background-color: rgb(255, 255, 255);
 	border-radius: 10px;
 	padding: 35px;
+	background-image: url('/images/user/userPattern.png');
+ 	background-repeat: repeat; /* Ripete il pattern */
+  	background-size: cover; /* Copre l'intera area */
 }
 
 .details-user-container{
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	margin-top: 70px;
+	background-color: rgb(255, 255, 255, 0.9);
+	padding: 10px;
 }
 
 .details-item{
@@ -26,8 +31,21 @@
 
 #title{
 	font-size: 50px;
+	font-family: 'Courier New', Courier, monospace;
+	font-weight: bold;
 }
 
 .logout-link{
 	font-size: 25px;
+}
+
+.logout-link span{
+	background-color: blue;
+	padding: 10px;
+	border-radius: 7px;
+	color: white;
+}
+
+#campo, #palla{
+	width: 600px;
 }

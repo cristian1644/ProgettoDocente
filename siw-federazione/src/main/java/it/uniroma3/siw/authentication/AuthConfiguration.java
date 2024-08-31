@@ -50,7 +50,7 @@ public class AuthConfiguration{
         )
             .exceptionHandling(exceptionHandling ->
                 exceptionHandling
-                    .accessDeniedPage("/access-denied")
+                    .accessDeniedPage("/permessoNegato")
             );
         return http.build();
     }

@@ -1,5 +1,7 @@
 package it.uniroma3.siw.controller;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import it.uniroma3.siw.DTO.TesseramentoGiocatoreDTO;
 import it.uniroma3.siw.model.Squadra;
@@ -18,7 +21,8 @@ import it.uniroma3.siw.repository.SquadraRepository;
 import it.uniroma3.siw.repository.TesseramentoGiocatoreRepository;
 import it.uniroma3.siw.service.SquadraService;
 import it.uniroma3.siw.service.TesseramentoGiocatoreService;
-import it.uniroma3.siw.validator.TesseramentoValidator;
+import it.uniroma3.siw.validator.NuovoTesseramentoValidator;
+import it.uniroma3.siw.validator.RimuoviTesseramentoValidator;
 import jakarta.validation.Valid;
 
 @Controller
@@ -28,7 +32,8 @@ public class TesseramentoGiocatoreController {
 	@Autowired GiocatoreRepository giocatoreRepository;
 	@Autowired SquadraRepository squadraRepository;
 	@Autowired TesseramentoGiocatoreRepository tesseramentoGiocatoreRepository;
-	@Autowired TesseramentoValidator tesseramentoValidator;
+	@Autowired NuovoTesseramentoValidator nuovoTesseramentoValidator;
+	@Autowired RimuoviTesseramentoValidator rimuoviTesseramentoValidator;
 	@Autowired SquadraService squadraService;
 	
 	
@@ -47,11 +52,12 @@ public class TesseramentoGiocatoreController {
 	 @PostMapping("/president/gestioneGiocatori/salva-tesseramento")
 	    public String salvaTesseramento(@Valid @ModelAttribute("tesseramentoGiocatoreDTO") TesseramentoGiocatoreDTO dto, BindingResult bindingResult,Model model) {
 		 
-		 this.tesseramentoValidator.validate(dto, bindingResult);
+		 this.nuovoTesseramentoValidator.validate(dto, bindingResult);
 		 
 		 if (bindingResult.hasErrors()) {
 			 	model.addAttribute("giocatori", giocatoreRepository.findAll());
 		        model.addAttribute("squadre", squadraRepository.findAll());
+		        model.addAttribute("tesseramenti", tesseramentoGiocatoreRepository.findAll());
 	            return "president-gestioneGiocatori";
 	        }
 		 
@@ -69,12 +75,25 @@ public class TesseramentoGiocatoreController {
 	    }
 	 
 	 @PostMapping("/president/gestioneGiocatori/rimuovi-tesseramento")
-	    public String rimuoviTesseramento(@RequestParam("tesseramentoId") Long tesseramentoId, Model model) {
-	        tesseramentoGiocatoreRepository.deleteById(tesseramentoId);
-	        model.addAttribute("successMessage", "Tesseramento rimosso con successo.");
-	        model.addAttribute("giocatori", giocatoreRepository.findAll());
-	        model.addAttribute("squadre", squadraRepository.findAll());
-	        model.addAttribute("tesseramentoGiocatoreDTO", new TesseramentoGiocatoreDTO());
-	        return "president-gestioneGiocatori";
-	    }
+	 public String rimuoviTesseramento(@Valid @ModelAttribute("removeTesseramentoGiocatoreDTO") TesseramentoGiocatoreDTO dto, 
+	                                   BindingResult bindingResult, Model model) {
+		 
+		 
+	     // Validazione custom
+	     this.rimuoviTesseramentoValidator.validate(dto, bindingResult);
+	     
+	     if (bindingResult.hasErrors()) {
+	         model.addAttribute("giocatori", giocatoreRepository.findAll());
+	         model.addAttribute("squadre", squadraRepository.findAll());
+	         model.addAttribute("tesseramenti", tesseramentoGiocatoreRepository.findAll());
+	         model.addAttribute("tesseramentoGiocatoreDTO", new TesseramentoGiocatoreDTO());
+	         return "president-gestioneGiocatori";
+	     }
+
+	     // Rimozione del tesseramento se non ci sono errori
+	     tesseramentoGiocatoreRepository.deleteById(dto.getTesseramentoId());
+	     model.addAttribute("successMessage", "Tesseramento rimosso con successo.");
+
+	     return "president-gestioneGiocatori";
+	 }
 }

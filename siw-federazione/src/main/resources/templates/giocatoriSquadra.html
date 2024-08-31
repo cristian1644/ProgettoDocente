@@ -55,6 +55,9 @@
 		            </tr>
 		        </thead>
 		        <tbody>
+					<tr th:if="${giocatori.empty}">
+		                <td colspan="5">Nessun giocatore registrato per questa squadra</td>
+		            </tr>
 		            <tr th:each="giocatore : ${giocatori}">
 		                <td th:text="${giocatore.nome}">Nome</td>
 		                <td th:text="${giocatore.cognome}">Cognome</td>

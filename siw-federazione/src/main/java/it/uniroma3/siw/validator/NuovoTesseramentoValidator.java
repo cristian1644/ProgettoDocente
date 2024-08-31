@@ -2,27 +2,34 @@ package it.uniroma3.siw.validator;
 
 import java.time.LocalDate;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import it.uniroma3.siw.DTO.TesseramentoGiocatoreDTO;
+import it.uniroma3.siw.model.Credentials;
 import it.uniroma3.siw.model.TesseramentoGiocatore;
+import it.uniroma3.siw.model.Utente;
+import it.uniroma3.siw.repository.CredentialsRepository;
 import it.uniroma3.siw.repository.GiocatoreRepository;
 import it.uniroma3.siw.repository.SquadraRepository;
 import it.uniroma3.siw.repository.TesseramentoGiocatoreRepository;
+import it.uniroma3.siw.repository.UserRepository;
 
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 @Component
-public class TesseramentoValidator implements Validator{
+public class NuovoTesseramentoValidator implements Validator{
 
 	@Autowired
     private TesseramentoGiocatoreRepository tesseramentoGiocatoreRepository;
 	@Autowired GiocatoreRepository giocatoreRepository;
 	@Autowired SquadraRepository squadraRepository;
-
+	@Autowired UserRepository userRepository;
+	@Autowired CredentialsRepository credentialsRepository;
+	
     @Override
     public void validate(Object o, Errors errors) {
     	TesseramentoGiocatoreDTO dto = (TesseramentoGiocatoreDTO) o;
@@ -33,8 +40,20 @@ public class TesseramentoValidator implements Validator{
 
             for (TesseramentoGiocatore tesseramento : tesseramentiEsistenti) {
                 if (isOverlapping(dto, tesseramento)) {
-                    errors.reject("tesseramento.overlapping");
+                    errors.rejectValue("inizioTesseramento", "tesseramento.overlapping");
                 }
+            }
+            
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            String username = authentication.getName();
+            Credentials c = this.credentialsRepository.findByUsername(username);
+            Utente presidente = this.userRepository.findByCredentials(c);
+            System.out.println("Utente corrente: " + username);
+            System.out.println("Presidente: " + presidente);
+            boolean result = this.squadraRepository.existsByIdAndPresidente(dto.getSquadraId(), presidente);
+            System.out.println("Esiste presidente: " + result);
+            if(!result) {
+            	errors.reject("wrong.president");
             }
     }
     

@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 public class TesseramentoGiocatoreDTO {
 
+	private Long tesseramentoId;
 	private Long giocatoreId;
     private Long squadraId;
     private LocalDate inizioTesseramento;
@@ -33,6 +34,12 @@ public class TesseramentoGiocatoreDTO {
 	}
 	public void setFineTesseramento(LocalDate fineTesseramento) {
 		this.fineTesseramento = fineTesseramento;
+	}
+	 public Long getTesseramentoId() {
+	        return tesseramentoId;
+	    }
+	public void setTesseramentoId(Long tesseramentoId) {
+	    this.tesseramentoId = tesseramentoId;
 	}
     
     
