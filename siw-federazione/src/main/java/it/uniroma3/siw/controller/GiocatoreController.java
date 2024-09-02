@@ -27,10 +27,10 @@ public class GiocatoreController {
 	    return "giocatore.html";
 	  }
 	
-	@GetMapping("/giocatore")
+	@GetMapping("/giocatori")
 	  public String showGiocatori(Model model) {
-	    model.addAttribute("giocatores", this.giocatoreService.findAll());
-	    return "giocatores.html";
+	    model.addAttribute("players", this.giocatoreService.findAll());
+	    return "giocatori";
 	  }
 
 	@PostMapping("/president/gestioneGiocatori")

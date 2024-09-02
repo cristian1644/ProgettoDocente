@@ -3,10 +3,10 @@
 
 <head>
 	<title>
-		Giocatori Squadra
+		SiwFederazione-Homepage
 	</title>
 	<link rel="stylesheet" href="/css/index.css" />
-	<link rel="stylesheet" href="/css/giocatoriSquadra.css" />
+	<link rel="stylesheet" href="/css/giocatori.css" />
 </head>
 
 <body>
@@ -49,30 +49,32 @@
 		</div>
 	</header>
 	<section>
-		<h1>Giocatori di [[${squadra.nome}]]</h1>
-		    <table>
-		        <thead>
-		            <tr>
-		                <th>Nome</th>
-		                <th>Cognome</th>
-		                <th>Ruolo</th>
-						<th>Inizio Tesseramento</th>
-						<th>Fine Tesseramento</th>
-		            </tr>
-		        </thead>
-		        <tbody>
-					<tr th:if="${giocatori.empty}">
-		                <td colspan="5">Nessun giocatore registrato per questa squadra</td>
-		            </tr>
-		            <tr th:each="giocatore : ${giocatori}">
-		                <td th:text="${giocatore.nome}">Nome</td>
-		                <td th:text="${giocatore.cognome}">Cognome</td>
-		                <td th:text="${giocatore.ruolo}">Ruolo</td>
-						<td th:text="${giocatore.tesseramento.inizioTesseramento}">Ruolo</td>
-						<td th:text="${giocatore.tesseramento.fineTesseramento}">Ruolo</td>
-		            </tr>
-		        </tbody>
-		    </table>
+		<h1>Giocatori della federazione</h1>
+		<table>
+	        <thead>
+	            <tr>
+	                <th>Nome</th>
+	                <th>Cognome</th>
+					<th>Luogo di nascita</th>
+					<th>Data nascita</th>
+					<th>Ruolo</th>
+					<th>Squadra</th>
+	            </tr>
+	        </thead>
+	        <tbody>
+				<tr th:if="${players.empty}">
+	                <td colspan="5">Nessun giocatore registrato nella federazione</td>
+	            </tr>
+	            <tr th:each="giocatore : ${players}">
+	                <td th:text="${giocatore.nome}">Nome</td>
+	                <td th:text="${giocatore.cognome}">Cognome</td>
+	                <td th:text="${giocatore.luogoNascita}">Luogo nascita</td>
+					<td th:text="${giocatore.dataNascita}">Data nascita</td>
+					<td th:text="${giocatore.ruolo}">Ruolo</td>
+					<td th:text="${giocatore.tesseramento?.squadra?.nome ?: 'Svincolato'}">Squadra</td>
+	            </tr>
+	        </tbody>
+	    </table>
 	</section>
 	<footer>
 		<div class="footer-container">

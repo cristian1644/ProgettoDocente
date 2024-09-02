@@ -39,18 +39,18 @@ public class RimuoviTesseramentoValidator implements Validator{
     	Optional<TesseramentoGiocatore> tesseramentoOpt = tesseramentoGiocatoreRepository.findById(dto.getTesseramentoId());
     	TesseramentoGiocatore tesseramento = tesseramentoOpt.get();
     	
-    	System.out.println("id squadra: " + dto.getSquadraId());
+    	System.out.println("id squadra: " + tesseramento.getSquadra().getId());
             
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             String username = authentication.getName();
             Credentials c = this.credentialsRepository.findByUsername(username);
             Utente presidente = this.userRepository.findByCredentials(c);
             System.out.println("Utente corrente: " + username);
-            System.out.println("Presidente: " + presidente);
-            boolean result = this.squadraRepository.existsByIdAndPresidente(tesseramento.getId(), presidente);
+            System.out.println("Presidente: " + presidente.getCognome());
+            boolean result = this.squadraRepository.existsByIdAndPresidente(tesseramento.getSquadra().getId(), presidente);
             System.out.println("Esiste presidente: " + result);
             if(!result) {
-            	errors.reject("wrong.presidentRemove");
+            	errors.reject("wrong.president");
             }
     }
 	

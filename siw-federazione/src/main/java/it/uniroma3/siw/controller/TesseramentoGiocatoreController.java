@@ -1,7 +1,5 @@
 package it.uniroma3.siw.controller;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,9 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import it.uniroma3.siw.DTO.TesseramentoGiocatoreDTO;
 import it.uniroma3.siw.model.Squadra;
 import it.uniroma3.siw.model.TesseramentoGiocatore;
@@ -58,6 +53,7 @@ public class TesseramentoGiocatoreController {
 			 	model.addAttribute("giocatori", giocatoreRepository.findAll());
 		        model.addAttribute("squadre", squadraRepository.findAll());
 		        model.addAttribute("tesseramenti", tesseramentoGiocatoreRepository.findAll());
+		        model.addAttribute("removeTesseramentoGiocatoreDTO", tesseramentoGiocatoreRepository.findAll());
 	            return "president-gestioneGiocatori";
 	        }
 		 
@@ -78,18 +74,16 @@ public class TesseramentoGiocatoreController {
 	 public String rimuoviTesseramento(@Valid @ModelAttribute("removeTesseramentoGiocatoreDTO") TesseramentoGiocatoreDTO dto, 
 	                                   BindingResult bindingResult, Model model) {
 		 
-		 
-	     // Validazione custom
 	     this.rimuoviTesseramentoValidator.validate(dto, bindingResult);
-	     
-	     if (bindingResult.hasErrors()) {
-	         model.addAttribute("giocatori", giocatoreRepository.findAll());
-	         model.addAttribute("squadre", squadraRepository.findAll());
-	         model.addAttribute("tesseramenti", tesseramentoGiocatoreRepository.findAll());
-	         model.addAttribute("tesseramentoGiocatoreDTO", new TesseramentoGiocatoreDTO());
-	         return "president-gestioneGiocatori";
-	     }
+	     model.addAttribute("tesseramentoGiocatoreDTO", new TesseramentoGiocatoreDTO());
+	     model.addAttribute("giocatori", giocatoreRepository.findAll());
+         model.addAttribute("squadre", squadraRepository.findAll());
+         model.addAttribute("tesseramenti", tesseramentoGiocatoreRepository.findAll());
 
+         if(bindingResult.hasErrors()){
+        	 return "president-gestioneGiocatori";
+         }
+         
 	     // Rimozione del tesseramento se non ci sono errori
 	     tesseramentoGiocatoreRepository.deleteById(dto.getTesseramentoId());
 	     model.addAttribute("successMessage", "Tesseramento rimosso con successo.");
