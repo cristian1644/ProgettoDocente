@@ -3,10 +3,10 @@
 
 <head>
 	<title>
-		SiwFederazione-Homepage
+		Squadre
 	</title>
 	<link rel="stylesheet" href="/css/index.css" />
-	<link rel="stylesheet" href="/css/giocatori.css" />
+	<link rel="stylesheet" href="/css/squadre.css" />
 </head>
 
 <body>
@@ -48,37 +48,27 @@
 			</span>
 		</div>
 	</header>
-	<section>
-		<h1>Giocatori della federazione</h1>
-		<table>
-	        <thead>
-	            <tr>
-	                <th>Nome</th>
-	                <th>Cognome</th>
-					<th>Luogo di nascita</th>
-					<th>Data nascita</th>
-					<th>Ruolo</th>
-					<th>Squadra</th>
-					<th>Storico tesseramenti</th>
-	            </tr>
-	        </thead>
-	        <tbody>
-				<tr th:if="${players.empty}">
-	                <td colspan="5">Nessun giocatore registrato nella federazione</td>
-	            </tr>
-	            <tr th:each="giocatore : ${players}">
-	                <td th:text="${giocatore.nome}">Nome</td>
-	                <td th:text="${giocatore.cognome}">Cognome</td>
-	                <td th:text="${giocatore.luogoNascita}">Luogo nascita</td>
-					<td th:text="${giocatore.dataNascita}">Data nascita</td>
-					<td th:text="${giocatore.ruolo}">Ruolo</td>
-					<td th:text="${giocatore.tesseramentoCorrente?.squadra?.nome ?: 'Svincolato'}">Squadra</td>
-					<td>
-		                <a th:href="@{/giocatore/{id}/storico-tesseramenti(id=${giocatore.id})}">Visualizza Tesseramenti</a>
-		            </td>
-	            </tr>
-	        </tbody>
-	    </table>
+	<section>	
+				<div th:text="'Storico tesseramenti di ' + ${giocatore.nome} + ' ' + ${giocatore.cognome}" id="title">Storico tesseramenti</div>
+				<table>
+		            <thead>
+		                <tr>
+		                    <th>Squadra</th>
+		                    <th>Inizio Tesseramento</th>
+		                    <th>Fine Tesseramento</th>>
+		                </tr>
+		            </thead>
+		            <tbody>
+						<tr th:if="${storicoTesseramenti.empty}">
+			                <td colspan="5">Il giocatore non ha tesseramenti conclusi</td>
+			            </tr>
+						<tr th:each="tesseramento : ${storicoTesseramenti}">
+				            <td th:text="${tesseramento.squadra.nome}">Nome Squadra</td>
+				            <td th:text="${tesseramento.inizioTesseramento}">Data Inizio</td>
+				            <td th:text="${tesseramento.fineTesseramento}">Data Fine</td>
+				        </tr>
+		            </tbody>
+		        </table>
 	</section>
 	<footer>
 		<div class="footer-container">

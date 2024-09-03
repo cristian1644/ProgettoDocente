@@ -1,7 +1,6 @@
 package it.uniroma3.siw.validator;
 
 import java.time.LocalDate;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -9,12 +8,12 @@ import org.springframework.stereotype.Component;
 
 import it.uniroma3.siw.DTO.TesseramentoGiocatoreDTO;
 import it.uniroma3.siw.model.Credentials;
+import it.uniroma3.siw.model.Giocatore;
 import it.uniroma3.siw.model.TesseramentoGiocatore;
 import it.uniroma3.siw.model.Utente;
 import it.uniroma3.siw.repository.CredentialsRepository;
 import it.uniroma3.siw.repository.GiocatoreRepository;
 import it.uniroma3.siw.repository.SquadraRepository;
-import it.uniroma3.siw.repository.TesseramentoGiocatoreRepository;
 import it.uniroma3.siw.repository.UserRepository;
 
 import org.springframework.validation.Errors;
@@ -23,8 +22,7 @@ import org.springframework.validation.Validator;
 @Component
 public class NuovoTesseramentoValidator implements Validator{
 
-	@Autowired
-    private TesseramentoGiocatoreRepository tesseramentoGiocatoreRepository;
+	
 	@Autowired GiocatoreRepository giocatoreRepository;
 	@Autowired SquadraRepository squadraRepository;
 	@Autowired UserRepository userRepository;
@@ -34,15 +32,17 @@ public class NuovoTesseramentoValidator implements Validator{
     public void validate(Object o, Errors errors) {
     	TesseramentoGiocatoreDTO dto = (TesseramentoGiocatoreDTO) o;
 
-    	List<TesseramentoGiocatore> tesseramentiEsistenti = tesseramentoGiocatoreRepository.findByGiocatore(
-                giocatoreRepository.findById(dto.getGiocatoreId()).orElseThrow()
-            );
+    	//recupero il giocatore e il suo tesseramneto corrente
+    	 Giocatore giocatore = giocatoreRepository.findById(dto.getGiocatoreId()).orElseThrow();
+    	// Recupera il tesseramento corrente del giocatore
+    	    TesseramentoGiocatore tesseramentoCorrente = giocatore.getTesseramentoCorrente();
 
-            for (TesseramentoGiocatore tesseramento : tesseramentiEsistenti) {
-                if (isOverlapping(dto, tesseramento)) {
-                    errors.rejectValue("inizioTesseramento", "tesseramento.overlapping");
-                }
-            }
+    	 // Verifica sovrapposizioni solo se esiste un tesseramento corrente
+    	    if (tesseramentoCorrente != null) {
+    	        if (isOverlapping(dto, tesseramentoCorrente)) {
+    	            errors.rejectValue("inizioTesseramento", "tesseramento.overlapping");
+    	        }
+    	    }
             
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             String username = authentication.getName();

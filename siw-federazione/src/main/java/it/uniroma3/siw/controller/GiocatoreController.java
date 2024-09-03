@@ -1,5 +1,9 @@
 package it.uniroma3.siw.controller;
 
+import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import it.uniroma3.siw.DTO.TesseramentoGiocatoreDTO;
+import it.uniroma3.siw.model.TesseramentoGiocatore;
 import it.uniroma3.siw.repository.GiocatoreRepository;
 import it.uniroma3.siw.repository.SquadraRepository;
 import it.uniroma3.siw.repository.TesseramentoGiocatoreRepository;
@@ -35,11 +40,20 @@ public class GiocatoreController {
 
 	@PostMapping("/president/gestioneGiocatori")
 	public String gestisciGiocatoriPagePOST(Model model) {
+		// Recupera tutti i tesseramenti e filtra quelli correnti
+	    List<TesseramentoGiocatore> tesseramenti = (List<TesseramentoGiocatore>) tesseramentoGiocatoreRepository.findAll();
+	    LocalDate today = LocalDate.now();
+	    
+	    // Filtra solo i tesseramenti correnti
+	    List<TesseramentoGiocatore> tesseramentiCorrenti = tesseramenti.stream()
+	        .filter(tesseramento -> tesseramento.getFineTesseramento() == null || tesseramento.getFineTesseramento().isAfter(today))
+	        .collect(Collectors.toList());
+		
 		model.addAttribute("tesseramentoGiocatoreDTO", new TesseramentoGiocatoreDTO());
 		model.addAttribute("removeTesseramentoGiocatoreDTO", new TesseramentoGiocatoreDTO());
         model.addAttribute("giocatori", giocatoreRepository.findAll());
         model.addAttribute("squadre", squadraRepository.findAll());
-        model.addAttribute("tesseramenti", tesseramentoGiocatoreRepository.findAll());
+        model.addAttribute("tesseramenti", tesseramentiCorrenti);
 		return "president-gestioneGiocatori";
 	}
 	

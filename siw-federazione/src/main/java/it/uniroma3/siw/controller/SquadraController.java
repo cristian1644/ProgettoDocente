@@ -112,9 +112,10 @@ public class SquadraController {
 
         // Estrai i giocatori dai tesseramenti
         List<Giocatore> giocatori = tesseramenti.stream()
-                                                .map(TesseramentoGiocatore::getGiocatore)
-                                                .distinct() // Evita duplicati, se necessario
-                                                .collect(Collectors.toList());
+                .map(TesseramentoGiocatore::getGiocatore)
+                .filter(giocatore -> giocatore.getTesseramentoCorrente() != null) // Filtra solo quelli con tesseramentoCorrente non null
+                .distinct() // Evita duplicati, se necessario
+                .collect(Collectors.toList());
 
         model.addAttribute("squadra", squadra);
         model.addAttribute("giocatori", giocatori);
