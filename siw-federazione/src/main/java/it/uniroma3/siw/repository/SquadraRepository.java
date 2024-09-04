@@ -12,4 +12,5 @@ public interface SquadraRepository extends CrudRepository<Squadra, Long>{
 	public Optional<Squadra> findById(Long id);
 	public Squadra findByNome(String nome);
 	boolean existsByIdAndPresidente(Long squadraId, Utente presidente);
+	Squadra findByNomeAndIdNot(String nome, Long id);
 }

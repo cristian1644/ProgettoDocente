@@ -24,6 +24,7 @@ import it.uniroma3.siw.repository.SquadraRepository;
 import it.uniroma3.siw.repository.TesseramentoGiocatoreRepository;
 import it.uniroma3.siw.repository.UserRepository;
 import it.uniroma3.siw.service.SquadraService;
+import it.uniroma3.siw.validator.ModificaSquadraValidator;
 import it.uniroma3.siw.validator.NuovaSquadraValidator;
 import jakarta.validation.Valid;
 
@@ -43,6 +44,8 @@ public class SquadraController {
 	@Autowired PresidenteRepository presidenteRepository;
 	
 	@Autowired TesseramentoGiocatoreRepository tesseramentoGiocatoreRepository;
+	
+	@Autowired ModificaSquadraValidator modificaSquadraValidator;
 	
 	
 	
@@ -100,6 +103,7 @@ public class SquadraController {
         List<Utente> presidenti = utenteRepository.findByCredentialsIn(presidentCredentials);
 		model.addAttribute("presidenti", presidenti);
 		model.addAttribute("squadra", squadra);
+		model.addAttribute("squadre",this.squadraService.findAll());
         
         return "admin-gestioneSquadre";
     }
@@ -135,9 +139,20 @@ public class SquadraController {
     }
 	
 	@PostMapping("/admin/aggiornaSquadra")
-    public String aggiornaSquadra(@ModelAttribute("squadraSelezionata") Squadra squadra) {
-        squadraService.update(squadra);
-        return "redirect:/squadre";
+    public String aggiornaSquadra(@Valid @ModelAttribute("squadraSelezionata") Squadra squadra,BindingResult bindingResult, Model model) {
+		this.modificaSquadraValidator.validate(squadra, bindingResult);
+		
+		if(!bindingResult.hasErrors()) {
+			squadraService.update(squadra);
+			return "redirect:/squadre";
+		}
+        
+		List<Credentials> presidentCredentials = credentialsRepository.findByRole("ROLE_PRESIDENT");
+        List<Utente> presidenti = utenteRepository.findByCredentialsIn(presidentCredentials);
+		model.addAttribute("presidenti", presidenti);
+		model.addAttribute("squadre",this.squadraService.findAll());
+		model.addAttribute("squadra", new Squadra());
+		return "admin-gestioneSquadre";
     }
  
 }

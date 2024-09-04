@@ -30,6 +30,11 @@ label {
     margin-bottom: 5px;
 	font-size: 25px;
 }
+
+#fondazione{
+	font-size: 25px;
+}
+
 input[type="text"],
 select {
     padding: 15px;

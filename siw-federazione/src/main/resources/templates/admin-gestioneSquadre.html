@@ -58,7 +58,7 @@
 		           </div>
 		           <div>
 		               <label for="fondazione">Fondazione:</label>
-		               <input type="text" id="fondazione" th:field="*{fondazione}" required />
+		               <input type="number" id="fondazione" th:field="*{fondazione}" required />
 		           </div>
 		           <div>
 		               <label for="indirizzoSede">Indirizzo Sede:</label>
@@ -105,7 +105,7 @@
 
 	           <!-- Form per aggiornare i dettagli della squadra selezionata -->
 	           <form th:action="@{/admin/aggiornaSquadra}" th:object="${squadraSelezionata}" method="POST" th:if="${squadraSelezionata != null}">
-	               <h3>Modifica Dettagli Squadra</h3>
+	               <h2>Modifica Dettagli Squadra</h2>
 				   <input type="hidden" th:field="*{id}" />
 	               <div>
 	                   <label for="nome">Nome:</label>
@@ -113,7 +113,7 @@
 	               </div>
 	               <div>
 	                   <label for="fondazione">Fondazione:</label>
-	                   <input type="text" id="fondazione" th:field="*{fondazione}" required />
+	                   <input type="number" id="fondazione" th:field="*{fondazione}" required />
 	               </div>
 	               <div>
 	                   <label for="indirizzoSede">Indirizzo Sede:</label>
