@@ -50,15 +50,13 @@
                 <h2>Login</h2>
                 <form th:action="@{/login}" method="POST">
                     <div class="form-group">
-                        <label for="login-username">Username</label>
-                        <input type="text" id="login-username" name="username" required>
+                        <input type="text" id="login-username" name="username" placeholder="Username..." required>
                     </div>
                     <div class="form-group">
-                        <label for="login-password">Password</label>
-                        <input type="password" id="login-password" name="password" required>
+                        <input type="password" id="login-password" name="password" placeholder="Password..." required>
                     </div>
                     <div class="form-group">
-                        <button type="submit">Login</button>
+                        <button type="submit">Accedi</button>
                     </div>
                     <div th:if="${param.error}">
                         <span th:text="#{invalid.credentials}" class="error-message"></span>
@@ -68,30 +66,34 @@
 
             <!-- Registration Form -->
             <div class="form-container">
-                <h2>Registrati</h2>
+                <h2>Registrazione</h2>
                 <form th:action="@{/registrazione}" th:object="${credentials}" method="POST">
-                    <div class="form-group">
-                        <label for="register-name">Nome</label>
-                        <input type="text" id="register-name" name="nome" required>
+                    <div class="form-group"> 
+                        <input type="text" id="register-name" name="nome" placeholder="Nome..." required>
                     </div>
                     <div class="form-group">
-                        <label for="register-surname">Cognome</label>
-                        <input type="text" id="register-surname" name="cognome" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="register-email">Email</label>
-                        <input type="text" id="register-email" name="email" required>
+                        <input type="text" id="register-surname" name="cognome" placeholder="Cognome.." required>
                     </div>
 					<div class="form-group">
-                        <label for="register-username">Username</label>
-                        <input type="text" id="register-name" name="username" required>
+			            <input type="text" id="register-codiceFiscale" name="codiceFiscale" placeholder="Codice Fiscale..." required>
+			        </div>
+			        <div class="form-group">
+			            <input type="date" id="register-dataNascita" name="dataNascita" placeholder="Data di Nascita..." required>
+			        </div>
+			        <div class="form-group">
+			            <input type="text" id="register-luogoNascita" name="luogoNascita" placeholder="Luogo di Nascita..." required>
+			        </div>
+                    <div class="form-group">
+                        <input type="text" id="register-email" name="email" placeholder="Email..." required>
+                    </div>
+					<div class="form-group">
+                        <input type="text" id="register-name" name="username" placeholder="Username..." required>
                     </div>
                     <div class="form-group">
-                        <label for="register-password">Password</label>
-                        <input type="password" id="register-password" name="password" required>
+                        <input type="password" id="register-password" name="password" placeholder="Password..." required>
                     </div>
                     <div class="form-group">
-                        <button type="submit">Register</button>
+                        <button type="submit">Registrati</button>
                     </div>
 					<div th:if="${successMessage}" class="registration-complete">
 						<p th:text="${successMessage}" class="successMessage"></p>

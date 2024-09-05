@@ -1,8 +1,11 @@
 package it.uniroma3.siw.controller;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -37,12 +40,15 @@ public class RegistrazioneController {
 	@PostMapping("/registrazione")
     public String registraUtente(@Valid @ModelAttribute("credentials") Credentials credentials, 
             BindingResult bindingResult, @RequestParam String nome, @RequestParam String cognome,
-            RedirectAttributes redirectAttributes, Model model) {
+            @RequestParam String codiceFiscale, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataNascita,
+            @RequestParam String luogoNascita, RedirectAttributes redirectAttributes, Model model) {
     	
 		this.credentialsValidator.validate(credentials, bindingResult);
 		
 		if(!bindingResult.hasErrors()) {
-	        Utente user = userService.creaUtente(nome, cognome);
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+	        String dataNascitaFormattata = dataNascita.format(formatter);
+	        Utente user = userService.creaUtente(nome, cognome, codiceFiscale, dataNascitaFormattata, luogoNascita);
 	        this.userService.saveUser(user);
 	        
 	        String encodedPassword = passwordEncoder.encode(credentials.getPassword()); //codifico la password

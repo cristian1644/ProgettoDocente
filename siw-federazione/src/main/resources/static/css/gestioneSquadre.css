@@ -35,6 +35,10 @@ label {
 	font-size: 25px;
 }
 
+#dataNascita{
+	font-size: 25px;
+}
+
 input[type="text"],
 select {
     padding: 15px;
@@ -64,6 +68,7 @@ button:hover {
 }
 .error-message {
     color: red;
+	font-weight: bold;
     font-size: 0.875em;
     margin-top: -10px;
     margin-bottom: 10px;

@@ -19,4 +19,8 @@ public class GiocatoreService {
 	public Iterable<Giocatore> findAll() {
 		return giocatoreRepository.findAll();
 	}
+	
+	public boolean giocatoreEsiste(String nome, String cognome) {
+		return this.giocatoreRepository.findByNomeAndCognome(nome, cognome).isPresent();
+	}
 }

@@ -24,11 +24,14 @@ public class UserService {
 		userRepository.save(user);
 	}
 	
-	public Utente creaUtente(String nome, String cognome) {
-		Utente user = new Utente();
-		user.setNome(nome);
-		user.setCognome(cognome);
-		return user;
+	public Utente creaUtente(String nome, String cognome, String codiceFiscale, String dataNascita, String luogoNascita) {
+	    Utente user = new Utente();
+	    user.setNome(nome);
+	    user.setCognome(cognome);
+	    user.setCF(codiceFiscale);
+	    user.setDataNascita(dataNascita);
+	    user.setLuogoNascita(luogoNascita);
+	    return user;
 	}
 	
 	public Utente findById(Long id) {

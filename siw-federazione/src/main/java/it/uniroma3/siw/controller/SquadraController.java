@@ -84,6 +84,7 @@ public class SquadraController {
         List<Utente> presidenti = utenteRepository.findByCredentialsIn(presidentCredentials);
         model.addAttribute("presidenti", presidenti);
         model.addAttribute("squadra", new Squadra());
+        model.addAttribute("giocatore", new Giocatore());
         model.addAttribute("squadre",this.squadraService.findAll());
         
 		return "admin-gestioneSquadre";
@@ -104,7 +105,7 @@ public class SquadraController {
 		model.addAttribute("presidenti", presidenti);
 		model.addAttribute("squadra", squadra);
 		model.addAttribute("squadre",this.squadraService.findAll());
-        
+		model.addAttribute("giocatore",new Giocatore());
         return "admin-gestioneSquadre";
     }
 	
@@ -135,6 +136,7 @@ public class SquadraController {
         List<Utente> presidenti = utenteRepository.findByCredentialsIn(presidentCredentials);
 		model.addAttribute("presidenti", presidenti);
 		model.addAttribute("squadre",this.squadraService.findAll());
+		model.addAttribute("giocatore",new Giocatore());
         return "admin-gestioneSquadre";
     }
 	
@@ -152,6 +154,7 @@ public class SquadraController {
 		model.addAttribute("presidenti", presidenti);
 		model.addAttribute("squadre",this.squadraService.findAll());
 		model.addAttribute("squadra", new Squadra());
+		model.addAttribute("giocatore",new Giocatore());
 		return "admin-gestioneSquadre";
     }
  

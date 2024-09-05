@@ -143,6 +143,37 @@
 	               </div>
 	           </form>
 		   </div>
+		   <div class="container">
+				<form th:action="@{/admin/aggiungiGiocatore}" th:object="${giocatore}" method="POST">
+					<h2>Aggiungi Nuovo Giocatore</h2>
+			           <div>
+			               <label for="nome">Nome:</label>
+			               <input type="text" id="nome" th:field="*{nome}" required />
+			           </div>
+			           <div>
+			               <label for="cognome">Cognome:</label>
+			               <input type="text" id="cognome" th:field="*{cognome}" required />
+			           </div>
+			           <div>
+			               <label for="dataNascita">Data di  nascita:</label>
+			               <input type="date" id="dataNascita" th:field="*{dataNascita}" required min="1960-01-01">
+			           </div>
+			           <div>
+			               <label for="luogoNascita">Luogo di nascita:</label>
+						   <input type="text" id="luogoNascita" th:field="*{luogoNascita}" required />
+			           </div>
+					   <div>
+   			               <label for="ruolo">Ruolo:</label>
+   						   <input type="text" id="ruolo" th:field="*{ruolo}" required />
+   			           </div>
+			           <div>
+			               <button type="submit">Aggiungi Giocatore</button>
+			           </div>
+					   <div th:if="${#fields.hasErrors('cognome')}" class="error-container">
+							<span th:errors="*{cognome}" class="error-message"></span>
+						</div>
+			       </form>
+		   </div>
 	</section>
 	<footer>
 		<div class="footer-container">
