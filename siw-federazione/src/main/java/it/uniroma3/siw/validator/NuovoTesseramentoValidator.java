@@ -1,6 +1,8 @@
 package it.uniroma3.siw.validator;
 
 import java.time.LocalDate;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -34,16 +36,23 @@ public class NuovoTesseramentoValidator implements Validator{
 
     	//recupero il giocatore e il suo tesseramneto corrente
     	 Giocatore giocatore = giocatoreRepository.findById(dto.getGiocatoreId()).orElseThrow();
-    	// Recupera il tesseramento corrente del giocatore
+    	// Recupera il tesseramento corrente del giocatore e quelli passati
     	    TesseramentoGiocatore tesseramentoCorrente = giocatore.getTesseramentoCorrente();
-
+    	    List<TesseramentoGiocatore> tesseramenti = giocatore.getTesseramentiPassati();
     	 // Verifica sovrapposizioni solo se esiste un tesseramento corrente
     	    if (tesseramentoCorrente != null) {
     	        if (isOverlapping(dto, tesseramentoCorrente)) {
     	            errors.rejectValue("inizioTesseramento", "tesseramento.overlapping");
     	        }
     	    }
-            
+            //controllo anche i tesseramenti passati
+    	    for (TesseramentoGiocatore tesseramento : tesseramenti) {
+    	        if (isOverlapping(dto, tesseramento)) {
+    	            errors.rejectValue("inizioTesseramento", "tesseramento.overlapping");
+    	            break;  // Esci dal loop se trovi una sovrapposizione
+    	        }
+    	    }
+    	    
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             String username = authentication.getName();
             Credentials c = this.credentialsRepository.findByUsername(username);

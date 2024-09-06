@@ -173,6 +173,22 @@
 							<span th:errors="*{cognome}" class="error-message"></span>
 						</div>
 			       </form>
+				   
+				   <form th:action="@{/admin/rimuoviGiocatore}" method="POST">
+	   				    <input type="hidden" name="_method" value="delete" />
+	   				    <div>
+	   				        <h2>Seleziona il giocatore da rimuovere</h2>
+	   				        <select name="giocatoreId" id="giocatoreId" required>
+	   							<option value="" disabled selected>Seleziona un giocatore</option>
+	   				            <option th:each="giocatore : ${giocatori}" 
+	   				                    th:value="${giocatore.id}" 
+	   				                    th:text="${giocatore.nome} + ' ' + ${giocatore.cognome}">Giocatore</option>
+	   				        </select>
+	   				    </div>
+	   				    <div>
+	   				        <button type="submit">Rimuovi Giocatore</button>
+	   				    </div>
+	   				</form>
 		   </div>
 	</section>
 	<footer>

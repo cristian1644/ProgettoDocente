@@ -23,6 +23,7 @@ import it.uniroma3.siw.repository.PresidenteRepository;
 import it.uniroma3.siw.repository.SquadraRepository;
 import it.uniroma3.siw.repository.TesseramentoGiocatoreRepository;
 import it.uniroma3.siw.repository.UserRepository;
+import it.uniroma3.siw.service.GiocatoreService;
 import it.uniroma3.siw.service.SquadraService;
 import it.uniroma3.siw.validator.ModificaSquadraValidator;
 import it.uniroma3.siw.validator.NuovaSquadraValidator;
@@ -46,6 +47,8 @@ public class SquadraController {
 	@Autowired TesseramentoGiocatoreRepository tesseramentoGiocatoreRepository;
 	
 	@Autowired ModificaSquadraValidator modificaSquadraValidator;
+	
+	@Autowired GiocatoreService giocatoreService;
 	
 	
 	
@@ -86,6 +89,7 @@ public class SquadraController {
         model.addAttribute("squadra", new Squadra());
         model.addAttribute("giocatore", new Giocatore());
         model.addAttribute("squadre",this.squadraService.findAll());
+        model.addAttribute("giocatori",this.giocatoreService.findAll());
         
 		return "admin-gestioneSquadre";
 	}
@@ -106,6 +110,7 @@ public class SquadraController {
 		model.addAttribute("squadra", squadra);
 		model.addAttribute("squadre",this.squadraService.findAll());
 		model.addAttribute("giocatore",new Giocatore());
+		model.addAttribute("giocatori",this.giocatoreService.findAll());
         return "admin-gestioneSquadre";
     }
 	
@@ -137,6 +142,7 @@ public class SquadraController {
 		model.addAttribute("presidenti", presidenti);
 		model.addAttribute("squadre",this.squadraService.findAll());
 		model.addAttribute("giocatore",new Giocatore());
+		model.addAttribute("giocatori",this.giocatoreService.findAll());
         return "admin-gestioneSquadre";
     }
 	
@@ -155,6 +161,7 @@ public class SquadraController {
 		model.addAttribute("squadre",this.squadraService.findAll());
 		model.addAttribute("squadra", new Squadra());
 		model.addAttribute("giocatore",new Giocatore());
+		model.addAttribute("giocatori",this.giocatoreService.findAll());
 		return "admin-gestioneSquadre";
     }
  
