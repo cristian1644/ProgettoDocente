@@ -12,5 +12,6 @@ public interface TesseramentoGiocatoreRepository extends CrudRepository<Tesseram
 
 	public List<TesseramentoGiocatore> findBySquadra(Squadra squadra);
 	public List<TesseramentoGiocatore> findByGiocatore(Giocatore giocatore);
+	public List<TesseramentoGiocatore> findByGiocatoreId(Long giocatoreId);
 	
 }

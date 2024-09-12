@@ -24,7 +24,7 @@ public class ModificaSquadraValidator implements Validator{
         errors.rejectValue("fondazione", "fondazione.invalid");
     }
 	    
-	    //controllo se lo username scelto è libero
+	    //controllo se l'indirizzo è valido
 	    if(squadra.getIndirizzoSede() != null && !squadra.getIndirizzoSede().startsWith("via")) {
 	    	errors.rejectValue("indirizzoSede", "sede.invalid");
 	    }

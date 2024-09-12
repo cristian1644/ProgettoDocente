@@ -30,7 +30,7 @@ public class Giocatore {
 	private TesseramentoGiocatore tesseramentoCorrente;
 	
 	@OneToMany(mappedBy = "giocatore", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<TesseramentoGiocatore> tesseramentiPassati = new ArrayList<>();
+	private List<TesseramentoGiocatore> tesseramenti = new ArrayList<>();
 	
 	//setter e getter
 	public Long getId() {
@@ -76,11 +76,11 @@ public class Giocatore {
 	public void setTesseramentoCorrente(TesseramentoGiocatore tesseramentoCorrente) {
 		this.tesseramentoCorrente = tesseramentoCorrente;
 	}
-	public List<TesseramentoGiocatore> getTesseramentiPassati() {
-		return tesseramentiPassati;
+	public List<TesseramentoGiocatore> getTesseramenti() {
+		return tesseramenti;
 	}
-	public void setTesseramentiPassati(List<TesseramentoGiocatore> tesseramentiPassati) {
-		this.tesseramentiPassati = tesseramentiPassati;
+	public void setTesseramentiPassati(List<TesseramentoGiocatore> tesseramenti) {
+		this.tesseramenti = tesseramenti;
 	}
 	//equals e hashcode
 	@Override

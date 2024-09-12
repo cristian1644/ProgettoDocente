@@ -37,14 +37,8 @@ public class NuovoTesseramentoValidator implements Validator{
     	//recupero il giocatore e il suo tesseramneto corrente
     	 Giocatore giocatore = giocatoreRepository.findById(dto.getGiocatoreId()).orElseThrow();
     	// Recupera il tesseramento corrente del giocatore e quelli passati
-    	    TesseramentoGiocatore tesseramentoCorrente = giocatore.getTesseramentoCorrente();
-    	    List<TesseramentoGiocatore> tesseramenti = giocatore.getTesseramentiPassati();
-    	 // Verifica sovrapposizioni solo se esiste un tesseramento corrente
-    	    if (tesseramentoCorrente != null) {
-    	        if (isOverlapping(dto, tesseramentoCorrente)) {
-    	            errors.rejectValue("inizioTesseramento", "tesseramento.overlapping");
-    	        }
-    	    }
+    	    List<TesseramentoGiocatore> tesseramenti = giocatore.getTesseramenti();
+
             //controllo anche i tesseramenti passati
     	    for (TesseramentoGiocatore tesseramento : tesseramenti) {
     	        if (isOverlapping(dto, tesseramento)) {

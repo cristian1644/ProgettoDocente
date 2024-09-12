@@ -120,7 +120,7 @@ public class TesseramentoGiocatoreController {
          //prendo il giocatore che deve essere tolto dalla squadra
          Giocatore giocatore = tesseramentoPassato.getGiocatore();
          //il tesseramento corrente deve terminare, quindi va nella lista di quelli passati
-         giocatore.getTesseramentiPassati().add(tesseramentoPassato);
+         giocatore.getTesseramenti().add(tesseramentoPassato);
          //il tesseramento corrente deve essere rimosso
          giocatore.setTesseramentoCorrente(null);
          giocatoreRepository.save(giocatore); //aggiorno le modifiche del giocatore
@@ -134,7 +134,7 @@ public class TesseramentoGiocatoreController {
 	 public String storicoTesseramentiPage(@PathVariable Long id, Model model) {
 		 Giocatore giocatore = giocatoreRepository.findById(id).orElseThrow();
 		 //recupero tutti i tesseramenti del giocatore
-		 List<TesseramentoGiocatore> tuttiTesseramenti = giocatore.getTesseramentiPassati();
+		 List<TesseramentoGiocatore> tuttiTesseramenti = giocatore.getTesseramenti();
 		 // escludo quello corrente
 		 List<TesseramentoGiocatore> storicoTesseramenti = tuttiTesseramenti.stream()
 			        .filter(tesseramento -> !tesseramento.equals(giocatore.getTesseramentoCorrente()))
