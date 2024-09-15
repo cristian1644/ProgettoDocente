@@ -97,6 +97,7 @@ public class GiocatoreController {
 	        model.addAttribute("squadra", new Squadra());
 	        model.addAttribute("giocatore", giocatore);
 	        model.addAttribute("squadre", this.squadraService.findAll());
+	        model.addAttribute("giocatori", this.giocatoreService.findAll());
 			return "admin-gestioneSquadre";
 		}
 		// Ottieni la data di nascita come stringa dal form

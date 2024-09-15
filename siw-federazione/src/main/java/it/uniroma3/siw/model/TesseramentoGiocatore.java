@@ -27,6 +27,17 @@ public class TesseramentoGiocatore {
 	private LocalDate inizioTesseramento;
 	private LocalDate fineTesseramento;
 	
+	public TesseramentoGiocatore(Giocatore giocatore, Squadra squadra, LocalDate inizioTesseramento, LocalDate fineTesseramento) {
+		this.giocatore = giocatore;
+		this.squadra = squadra;
+		this.inizioTesseramento = inizioTesseramento;
+		this.fineTesseramento = fineTesseramento;
+	}
+	
+	public TesseramentoGiocatore() {
+		
+	}
+	
 	//setter e getter
 	public Long getId() {
 		return id;

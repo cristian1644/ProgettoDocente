@@ -56,7 +56,8 @@
 			            <label for="giocatoreId" id="giocatoreId">Giocatore:</label>
 						<select name="giocatoreId" required>
 						    <option value="" disabled selected>Seleziona un giocatore</option>
-			                <option th:each="giocatore : ${giocatori}" th:value="${giocatore.id}" th:text="${giocatore.cognome}">Giocatore</option>
+			                <option th:each="giocatore : ${giocatori}" th:value="${giocatore.id}" th:text="${giocatore.nome} + ' ' + 
+							${giocatore.cognome}">Giocatore</option>
 			            </select>
 			        </div>
 			        <div>
@@ -77,6 +78,9 @@
 					</div>
 					<div th:if="${#fields.hasErrors('inizioTesseramento')}" class="error-container">
 						<span th:errors="*{inizioTesseramento}" class="error-message"></span>
+					</div>
+					<div th:if="${#fields.hasErrors('fineTesseramento')}" class="error-container">
+						<span th:errors="*{fineTesseramento}" class="error-message"></span>
 					</div>
 					<div th:if="${#fields.hasGlobalErrors()}">
 					    <div th:each="err : ${#fields.globalErrors()}">
@@ -118,7 +122,6 @@
 	</section>
 	<footer>
 		<div class="footer-container">
-			<div>p</div>
 		</div>
 	</footer>
 </body>

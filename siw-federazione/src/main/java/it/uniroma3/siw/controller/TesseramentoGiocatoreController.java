@@ -38,18 +38,6 @@ public class TesseramentoGiocatoreController {
 	@Autowired SquadraService squadraService;
 	
 	
-	@GetMapping("/tesseramentoGiocatore/{id}")
-	  public String getTesseramentoGiocatore(@PathVariable("id") Long id, Model model) {
-	    model.addAttribute("tesseramentoGiocatore", this.tesseramentoGiocatoreService.findById(id));
-	    return "tesseramentoGiocatore.html";
-	  }
-	
-	@GetMapping("/tesseramentoGiocatore")
-	  public String showGiocatori(Model model) {
-	    model.addAttribute("tesseramentoGiocatores", this.tesseramentoGiocatoreService.findAll());
-	    return "tesseramentoGiocatores.html";
-	  }
-	
 	 @PostMapping("/president/gestioneGiocatori/salva-tesseramento")
 	    public String salvaTesseramento(@Valid @ModelAttribute("tesseramentoGiocatoreDTO") TesseramentoGiocatoreDTO dto, BindingResult bindingResult,Model model) {
 		 
@@ -71,11 +59,11 @@ public class TesseramentoGiocatoreController {
 	            return "president-gestioneGiocatori";
 	        }
 		 
-	        TesseramentoGiocatore tesseramentoGiocatore = new TesseramentoGiocatore();
-	        tesseramentoGiocatore.setGiocatore(giocatoreRepository.findById(dto.getGiocatoreId()).orElseThrow());
-	        tesseramentoGiocatore.setSquadra(squadraRepository.findById(dto.getSquadraId()).orElseThrow());
-	        tesseramentoGiocatore.setInizioTesseramento(dto.getInizioTesseramento());
-	        tesseramentoGiocatore.setFineTesseramento(dto.getFineTesseramento());
+	        TesseramentoGiocatore tesseramentoGiocatore = new TesseramentoGiocatore(
+	        		giocatoreRepository.findById(dto.getGiocatoreId()).orElseThrow(),
+	        		squadraRepository.findById(dto.getSquadraId()).orElseThrow(),
+	        		dto.getInizioTesseramento(),
+	        		dto.getFineTesseramento());
 
 	        tesseramentoGiocatoreRepository.save(tesseramentoGiocatore);
 	        tesseramentoGiocatore.getGiocatore().setTesseramentoCorrente(tesseramentoGiocatore);
@@ -89,15 +77,12 @@ public class TesseramentoGiocatoreController {
 	 @PostMapping("/president/gestioneGiocatori/rimuovi-tesseramento")
 	 public String rimuoviTesseramento(@Valid @ModelAttribute("removeTesseramentoGiocatoreDTO") TesseramentoGiocatoreDTO dto, 
 	                                   BindingResult bindingResult, Model model) {
-		 System.out.println("DTO completo: " + dto);
-		 System.out.println("Giocatore ID: " + dto.getGiocatoreId());
-		    System.out.println("Tesseramento ID: " + dto.getTesseramentoId());
 		 
 	     this.rimuoviTesseramentoValidator.validate(dto, bindingResult);
 	     model.addAttribute("tesseramentoGiocatoreDTO", new TesseramentoGiocatoreDTO());
 	     model.addAttribute("giocatori", giocatoreRepository.findAll());
          model.addAttribute("squadre", squadraRepository.findAll());
-      // Recupera tutti i tesseramenti e filtra quelli correnti
+      // Recupera tutti i tesseramenti
  	    List<TesseramentoGiocatore> tesseramenti = (List<TesseramentoGiocatore>) tesseramentoGiocatoreRepository.findAll();
  	    LocalDate today = LocalDate.now();
  	    
@@ -115,7 +100,7 @@ public class TesseramentoGiocatoreController {
          Optional<TesseramentoGiocatore> tesseramentoOpt = tesseramentoGiocatoreRepository.findById(dto.getTesseramentoId());
          TesseramentoGiocatore tesseramentoPassato = tesseramentoOpt.get();
          System.out.println("id tesseramento: " + tesseramentoPassato.getId());
-         tesseramentoPassato.setFineTesseramento(LocalDate.now().minusDays(1)); //imposto la data di fine a ieri
+         tesseramentoPassato.setFineTesseramento(LocalDate.now()); //imposto la data di fine a oggi
          
          //prendo il giocatore che deve essere tolto dalla squadra
          Giocatore giocatore = tesseramentoPassato.getGiocatore();

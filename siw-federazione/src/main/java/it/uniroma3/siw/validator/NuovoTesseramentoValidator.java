@@ -58,6 +58,12 @@ public class NuovoTesseramentoValidator implements Validator{
             if(!result) {
             	errors.reject("wrong.president");
             }
+            
+         // Controllo che la data di fine sia successiva alla data di inizio
+            if (dto.getFineTesseramento().isBefore(dto.getInizioTesseramento()) ||
+                dto.getFineTesseramento().isEqual(dto.getInizioTesseramento())) {
+                errors.rejectValue("fineTesseramento", "tesseramento.invalidDate");
+            }
     }
     
     private boolean isOverlapping(TesseramentoGiocatoreDTO nuovoTesseramento, TesseramentoGiocatore esistenteTesseramento) {
