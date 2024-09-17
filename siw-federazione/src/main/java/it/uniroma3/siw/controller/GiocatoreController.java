@@ -21,13 +21,11 @@ import it.uniroma3.siw.model.Giocatore;
 import it.uniroma3.siw.model.Squadra;
 import it.uniroma3.siw.model.TesseramentoGiocatore;
 import it.uniroma3.siw.model.Utente;
-import it.uniroma3.siw.repository.CredentialsRepository;
-import it.uniroma3.siw.repository.GiocatoreRepository;
-import it.uniroma3.siw.repository.SquadraRepository;
-import it.uniroma3.siw.repository.TesseramentoGiocatoreRepository;
-import it.uniroma3.siw.repository.UserRepository;
+import it.uniroma3.siw.service.CredentialsService;
 import it.uniroma3.siw.service.GiocatoreService;
 import it.uniroma3.siw.service.SquadraService;
+import it.uniroma3.siw.service.TesseramentoGiocatoreService;
+import it.uniroma3.siw.service.UserService;
 import it.uniroma3.siw.validator.AggiungiGiocatoreValidator;
 import jakarta.validation.Valid;
 
@@ -35,12 +33,10 @@ import jakarta.validation.Valid;
 public class GiocatoreController {
 
 	@Autowired GiocatoreService giocatoreService;
-	@Autowired GiocatoreRepository giocatoreRepository;
-	@Autowired SquadraRepository squadraRepository;
-	@Autowired TesseramentoGiocatoreRepository tesseramentoGiocatoreRepository;
+	@Autowired TesseramentoGiocatoreService tesseramentoGiocatoreService;
 	@Autowired AggiungiGiocatoreValidator aggiungiGiocatoreValidator;
-	@Autowired CredentialsRepository credentialsRepository;
-	@Autowired UserRepository utenteRepository;
+	@Autowired CredentialsService credentialsService;
+	@Autowired UserService utenteService;
 	@Autowired SquadraService squadraService;
 	
 	@GetMapping("/giocatore/{id}")
@@ -58,7 +54,7 @@ public class GiocatoreController {
 	@PostMapping("/president/gestioneGiocatori")
 	public String gestisciGiocatoriPagePOST(Model model) {
 		// Recupera tutti i tesseramenti e filtra quelli correnti
-	    List<TesseramentoGiocatore> tesseramenti = (List<TesseramentoGiocatore>) tesseramentoGiocatoreRepository.findAll();
+	    List<TesseramentoGiocatore> tesseramenti = (List<TesseramentoGiocatore>) tesseramentoGiocatoreService.findAll();
 	    LocalDate today = LocalDate.now();
 	    
 	    // Filtra solo i tesseramenti correnti
@@ -68,8 +64,8 @@ public class GiocatoreController {
 		
 		model.addAttribute("tesseramentoGiocatoreDTO", new TesseramentoGiocatoreDTO());
 		model.addAttribute("removeTesseramentoGiocatoreDTO", new TesseramentoGiocatoreDTO());
-        model.addAttribute("giocatori", giocatoreRepository.findAll());
-        model.addAttribute("squadre", squadraRepository.findAll());
+        model.addAttribute("giocatori", giocatoreService.findAll());
+        model.addAttribute("squadre", squadraService.findAll());
         model.addAttribute("tesseramenti", tesseramentiCorrenti);
 		return "president-gestioneGiocatori";
 	}
@@ -78,9 +74,9 @@ public class GiocatoreController {
 	public String gestisciGiocatoriPageGET(Model model) {
 		model.addAttribute("tesseramentoGiocatoreDTO", new TesseramentoGiocatoreDTO());
 		model.addAttribute("removeTesseramentoGiocatoreDTO", new TesseramentoGiocatoreDTO());
-        model.addAttribute("giocatori", giocatoreRepository.findAll());
-        model.addAttribute("squadre", squadraRepository.findAll());
-        model.addAttribute("tesseramenti", tesseramentoGiocatoreRepository.findAll());
+        model.addAttribute("giocatori", giocatoreService.findAll());
+        model.addAttribute("squadre", squadraService.findAll());
+        model.addAttribute("tesseramenti", tesseramentoGiocatoreService.findAll());
 		return "president-gestioneGiocatori";
 	}
 
@@ -90,9 +86,9 @@ public class GiocatoreController {
 		this.aggiungiGiocatoreValidator.validate(giocatore, bindingResult);
 		
 		if(bindingResult.hasErrors()) {
-			List<Credentials> presidentCredentials = credentialsRepository.findByRole("ROLE_PRESIDENT");        
+			List<Credentials> presidentCredentials = credentialsService.findByRole("ROLE_PRESIDENT");        
 	        // Trova gli utenti associati a queste credenziali
-	        List<Utente> presidenti = utenteRepository.findByCredentialsIn(presidentCredentials);
+	        List<Utente> presidenti = utenteService.findByCredentialsIn(presidentCredentials);
 			model.addAttribute("presidenti", presidenti);
 	        model.addAttribute("squadra", new Squadra());
 	        model.addAttribute("giocatore", giocatore);
@@ -107,7 +103,7 @@ public class GiocatoreController {
 	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 	    String dataNascitaFormattata = dataNascitaLocalDate.format(formatter);
 	    giocatore.setDataNascita(dataNascitaFormattata);
-		this.giocatoreRepository.save(giocatore);
+		this.giocatoreService.save(giocatore);
 		model.addAttribute("players", this.giocatoreService.findAll());
 		return "redirect:/giocatori";
 	}
@@ -115,11 +111,10 @@ public class GiocatoreController {
 	@PostMapping("/admin/rimuoviGiocatore")
 	public String removeGiocatore(@RequestParam("giocatoreId") Long giocatoreId, Model model) {
 	    // Trova il giocatore per ID
-	    Giocatore giocatore = giocatoreRepository.findById(giocatoreId)
-	        .orElseThrow(() -> new IllegalArgumentException("Giocatore non trovato con ID: " + giocatoreId));
+	    Giocatore giocatore = giocatoreService.findById(giocatoreId);
 
 	    // Rimuovi il giocatore dal database
-	    giocatoreRepository.delete(giocatore);
+	    giocatoreService.delete(giocatore);
 
 	    // Aggiorna la lista dei giocatori e restituiscila al modello
 	    model.addAttribute("players", giocatoreService.findAll());

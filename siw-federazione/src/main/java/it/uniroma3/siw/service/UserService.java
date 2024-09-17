@@ -1,5 +1,6 @@
 package it.uniroma3.siw.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,4 +43,7 @@ public class UserService {
 		return this.userRepository.findByCredentials(credentials);
 	}
 	
+	public List<Utente> findByCredentialsIn(List<Credentials> credentials){
+		return this.userRepository.findByCredentialsIn(credentials);
+	}
 }

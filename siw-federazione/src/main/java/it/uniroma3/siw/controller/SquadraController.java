@@ -18,13 +18,12 @@ import it.uniroma3.siw.model.Giocatore;
 import it.uniroma3.siw.model.Squadra;
 import it.uniroma3.siw.model.TesseramentoGiocatore;
 import it.uniroma3.siw.model.Utente;
-import it.uniroma3.siw.repository.CredentialsRepository;
-import it.uniroma3.siw.repository.PresidenteRepository;
-import it.uniroma3.siw.repository.SquadraRepository;
-import it.uniroma3.siw.repository.TesseramentoGiocatoreRepository;
-import it.uniroma3.siw.repository.UserRepository;
-import it.uniroma3.siw.service.GiocatoreService;
+import it.uniroma3.siw.service.CredentialsService;
+import it.uniroma3.siw.service.PresidenteService;
 import it.uniroma3.siw.service.SquadraService;
+import it.uniroma3.siw.service.TesseramentoGiocatoreService;
+import it.uniroma3.siw.service.UserService;
+import it.uniroma3.siw.service.GiocatoreService;
 import it.uniroma3.siw.validator.ModificaSquadraValidator;
 import it.uniroma3.siw.validator.NuovaSquadraValidator;
 import jakarta.validation.Valid;
@@ -32,23 +31,21 @@ import jakarta.validation.Valid;
 @Controller
 public class SquadraController {
 
-	@Autowired SquadraService squadraService;
+	@Autowired SquadraService squadraService;	
 	
-	@Autowired CredentialsRepository credentialsRepository;
-	
-	@Autowired UserRepository utenteRepository;
-	
-	@Autowired SquadraRepository squadraRepository;
+	@Autowired UserService utenteService;
 	
 	@Autowired NuovaSquadraValidator nuovaSquadraValidator;
 	
-	@Autowired PresidenteRepository presidenteRepository;
+	@Autowired PresidenteService presidenteService;
 	
-	@Autowired TesseramentoGiocatoreRepository tesseramentoGiocatoreRepository;
+	@Autowired TesseramentoGiocatoreService tesseramentoGiocatoreService;
 	
 	@Autowired ModificaSquadraValidator modificaSquadraValidator;
 	
 	@Autowired GiocatoreService giocatoreService;
+	
+	@Autowired CredentialsService credentialsService;
 	
 	
 	
@@ -81,10 +78,10 @@ public class SquadraController {
 	@PostMapping("/admin/gestioneSquadre")
 	public String gestioneQuadrePage(Model model) {
 		// Trova tutte le credenziali con ruolo ROLE_PRESIDENT
-        List<Credentials> presidentCredentials = credentialsRepository.findByRole("ROLE_PRESIDENT");
+        List<Credentials> presidentCredentials = credentialsService.findByRole("ROLE_PRESIDENT");
         
         // Trova gli utenti associati a queste credenziali
-        List<Utente> presidenti = utenteRepository.findByCredentialsIn(presidentCredentials);
+        List<Utente> presidenti = utenteService.findByCredentialsIn(presidentCredentials);
         model.addAttribute("presidenti", presidenti);
         model.addAttribute("squadra", new Squadra());
         model.addAttribute("giocatore", new Giocatore());
@@ -99,13 +96,13 @@ public class SquadraController {
 		
 		this.nuovaSquadraValidator.validate(squadra, bindingResult);
 		if(!bindingResult.hasErrors()) {
-			squadraRepository.save(squadra);
+			squadraService.save(squadra);
 			return "redirect:/squadre";
 		}
-		List<Credentials> presidentCredentials = credentialsRepository.findByRole("ROLE_PRESIDENT");
+		List<Credentials> presidentCredentials = credentialsService.findByRole("ROLE_PRESIDENT");
         
         // Trova gli utenti associati a queste credenziali
-        List<Utente> presidenti = utenteRepository.findByCredentialsIn(presidentCredentials);
+        List<Utente> presidenti = utenteService.findByCredentialsIn(presidentCredentials);
 		model.addAttribute("presidenti", presidenti);
 		model.addAttribute("squadra", squadra);
 		model.addAttribute("squadre",this.squadraService.findAll());
@@ -116,9 +113,9 @@ public class SquadraController {
 	
 	@GetMapping("/squadra/{id}/giocatori")
     public String mostraGiocatori(@PathVariable Long id, Model model) {
-        Squadra squadra = squadraRepository.findById(id).orElseThrow();
+        Squadra squadra = squadraService.findById(id);
         // Recupera tutti i tesseramenti per la squadra selezionata
-        List<TesseramentoGiocatore> tesseramenti = tesseramentoGiocatoreRepository.findBySquadra(squadra);
+        List<TesseramentoGiocatore> tesseramenti = tesseramentoGiocatoreService.findBySquadra(squadra);
 
         // Estrai i giocatori dai tesseramenti
         List<Giocatore> giocatori = tesseramenti.stream()
@@ -137,8 +134,8 @@ public class SquadraController {
         Squadra squadraSelezionata = squadraService.findById(id);
         model.addAttribute("squadraSelezionata", squadraSelezionata);
         model.addAttribute("squadra", new Squadra());
-        List<Credentials> presidentCredentials = credentialsRepository.findByRole("ROLE_PRESIDENT");
-        List<Utente> presidenti = utenteRepository.findByCredentialsIn(presidentCredentials);
+        List<Credentials> presidentCredentials = credentialsService.findByRole("ROLE_PRESIDENT");
+        List<Utente> presidenti = utenteService.findByCredentialsIn(presidentCredentials);
 		model.addAttribute("presidenti", presidenti);
 		model.addAttribute("squadre",this.squadraService.findAll());
 		model.addAttribute("giocatore",new Giocatore());
@@ -155,8 +152,8 @@ public class SquadraController {
 			return "redirect:/squadre";
 		}
         
-		List<Credentials> presidentCredentials = credentialsRepository.findByRole("ROLE_PRESIDENT");
-        List<Utente> presidenti = utenteRepository.findByCredentialsIn(presidentCredentials);
+		List<Credentials> presidentCredentials = credentialsService.findByRole("ROLE_PRESIDENT");
+        List<Utente> presidenti = utenteService.findByCredentialsIn(presidentCredentials);
 		model.addAttribute("presidenti", presidenti);
 		model.addAttribute("squadre",this.squadraService.findAll());
 		model.addAttribute("squadra", new Squadra());

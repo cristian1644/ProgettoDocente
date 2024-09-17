@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import it.uniroma3.siw.model.Squadra;
 import it.uniroma3.siw.repository.SquadraRepository;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.Valid;
 
 @Service
 public class SquadraService {
@@ -46,4 +47,9 @@ public class SquadraService {
             throw new EntityNotFoundException("Squadra non trovata con id: " + squadraAggiornata.getId());
         }
     }
+
+	public void save(@Valid Squadra squadra) {
+		// TODO Auto-generated method stub
+		this.squadraRepository.save(squadra);
+	}
 }

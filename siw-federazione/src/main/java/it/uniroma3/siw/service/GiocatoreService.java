@@ -23,4 +23,12 @@ public class GiocatoreService {
 	public boolean giocatoreEsiste(String nome, String cognome) {
 		return this.giocatoreRepository.findByNomeAndCognome(nome, cognome).isPresent();
 	}
+	
+	public void save(Giocatore giocatore) {
+		this.giocatoreRepository.save(giocatore);
+	}
+	
+	public void delete(Giocatore giocatore) {
+		this.giocatoreRepository.delete(giocatore);
+	}
 }
